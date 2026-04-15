@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>SF Eviction Causes by Month</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <style>
+        body {
+        background-color: #f0f0f0;
+        font-family: Georgia, serif;
+        display: flex;
+        justify-content: center;
+        padding: 40px 20px;
+        margin: 0;
+        }
+
+        .chart-wrapper {
+        max-width: 860px;
+        width: 100%;
+        }
+
+        h2 {
+        font-size: 1.3rem;
+        color: #2d4a2d;
+        margin: 0 0 4px 0;
+        }
+
+        .subtitle {
+        font-size: 0.85rem;
+        color: #888;
+        font-style: italic;
+        margin: 0 0 4px 0;
+        border-left: 3px solid #3a7d44;
+        padding-left: 8px;
+        min-height: 1.2em;
+        }
+
+        .source {
+        font-size: 0.75rem;
+        color: #888;
+        margin-top: 10px;
+        }
+
+        .axis text {
+        fill: #555;
+        font-size: 0.75rem;
+        font-family: Georgia, serif;
+        }
+
+        .axis line,
+        .axis path {
+        stroke: #ccc;
+        }
+
+        .grid line {
+        stroke: #ddd;
+        stroke-dasharray: 3, 3;
+        }
+
+        .grid path {
+        stroke-width: 0;
+        }
+
+        .legend-label {
+        font-size: 0.75rem;
+        fill: #444;
+        font-family: Georgia, serif;
+        }
+    </style>
+    </head>
+    <body>
+
+    <div class="chart-wrapper">
+    <h2>Eviction Notices by Cause Across Each Month (All Years Combined)</h2>
+    <p class="subtitle">Certain eviction types spike during specific months, revealing seasonal patterns
+        in how and when San Francisco residents are displaced. <strong>[Will add more text and context to the events shown in the chart or will add context through interaction]</strong></p>
+    <div id="chart"></div>
+    <p class="source">Source: SF Rent Arbitration Board via DataSF · Eviction Notices dataset (as of April 2026)</p>
+    </div>
+
+    <script>
+    const MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+    // Top 6 causes by volume — everything else → "Other"
+    const TOP_CAUSES = ["Owner Move In","Breach","Nuisance","Ellis Act WithDrawal","Non Payment","Capital Improvement"];
+
+    // ColorBrewer - Qualitative Set3
+    const colors = {
+        "Owner Move In":        "#a6cee3",
+        "Breach":               "#1f78b4",
+        "Nuisance":             "#b2df8a",
+        "Ellis Act WithDrawal": "#33a02c",
+        "Non Payment":          "#fb9a99",
+        "Capital Improvement":  "#e31a1c",
+        "Other":                "#fdbf6f",
+    };
+
+    const causes = [...TOP_CAUSES, "Other"];
+
+    // Layout
+    const margin = { top: 20, right: 30, bottom: 60, left: 62 };
+    const totalW = 820;
+    const totalH = 440;
+    const W = totalW - margin.left - margin.right;
+    const H = totalH - margin.top - margin.bottom;
+
+    const svg = d3.select("#chart")
+        .append("svg")
+        .attr("width", totalW)
+        .attr("height", totalH)
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // Load & aggregate CSV
+    d3.csv("/data/evictions_clean.csv").then(raw => {
+
+        // Build month × cause counts
+        // Each row in the CSV has boolean columns for each cause
+        const monthData = MONTH_NAMES.map((name, idx) => {
+        const monthRows = raw.filter(d => +d.month === idx + 1);
+        const entry = { month: name };
+
+        TOP_CAUSES.forEach(cause => {
+            entry[cause] = d3.sum(monthRows, d => d[cause] === "True" || d[cause] === "true" ? 1 : 0);
+        });
+
+        // Other = total rows minus rows accounted for by top causes
+        const topSet = new Set(TOP_CAUSES);
+        entry["Other"] = monthRows.filter(d => !topSet.has(d.primary_cause)).length;
+
+        return entry;
+        });
+
+        // Stack
+        const stack = d3.stack().keys(causes);
+        const series = stack(monthData);
+
+        // Scales
+        const x = d3.scaleBand()
+        .domain(MONTH_NAMES)
+        .range([0, W])
+        .padding(0.25);
+
+        const y = d3.scaleLinear()
+        .domain([0, d3.max(series[series.length - 1], d => d[1]) * 1.08])
+        .range([H, 0]);
+
+        // Gridlines
+        svg.append("g")
+        .attr("class", "grid")
+        .call(d3.axisLeft(y).tickSize(-W).tickFormat("").ticks(6));
+
+        // Bars
+        svg.selectAll(".cause-group")
+        .data(series)
+        .enter()
+        .append("g")
+            .attr("fill", d => colors[d.key])
+        .selectAll("rect")
+        .data(d => d)
+        .enter()
+        .append("rect")
+            .attr("x",      d => x(d.data.month))
+            .attr("y",      d => y(d[1]))
+            .attr("height", d => y(d[0]) - y(d[1]))
+            .attr("width",  x.bandwidth());
+
+        // X Axis
+        svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", `translate(0,${H})`)
+        .call(d3.axisBottom(x).tickSizeOuter(0));
+
+        // Y Axis
+        svg.append("g")
+        .attr("class", "axis")
+        .call(d3.axisLeft(y).ticks(6).tickFormat(d => d.toLocaleString()));
+
+        svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -52)
+        .attr("x", -(H / 2))
+        .attr("text-anchor", "middle")
+        .attr("fill", "#555")
+        .style("font-size", "0.75rem")
+        .style("font-family", "Georgia, serif")
+        .text("Total Eviction Notices Filed");
+
+        // Legend (two centered rows)
+        const swatchSize = 11;
+        const colWidth   = 158;
+        const legendRows = [ causes.slice(0, 4), causes.slice(4) ];
+
+        legendRows.forEach((row, rowIdx) => {
+        const startX = (W - row.length * colWidth) / 2;
+
+        row.forEach((cause, i) => {
+            const lx = startX + i * colWidth;
+            const ly = H + 32 + rowIdx * 18;
+
+            svg.append("rect")
+            .attr("x", lx).attr("y", ly)
+            .attr("width", swatchSize).attr("height", swatchSize)
+            .attr("fill", colors[cause]);
+
+            svg.append("text")
+            .attr("class", "legend-label")
+            .attr("x", lx + swatchSize + 5)
+            .attr("y", ly + swatchSize - 1)
+            .text(cause);
+        });
+        });
+
+    });
+</script>
+</body>
+</html>
