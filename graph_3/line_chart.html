@@ -3,136 +3,136 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Line Chart - SF Eviction Notices Over Time</title>
+  <title>SF Eviction Notices Over Time</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
   <style>
-        body {
-        background-color: #f0f0f0;
-        font-family: Georgia, serif;
-        display: flex;
-        justify-content: center;
-        padding: 40px 20px;
-        margin: 0;
-        }
+    body {
+      background-color: #f0f0f0;
+      font-family: Georgia, serif;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+      margin: 0;
+    }
 
-        .chart-wrapper {
-        max-width: 860px;
-        width: 100%;
-        }
+    .chart-wrapper {
+      max-width: 860px;
+      width: 100%;
+    }
 
-        h2 {
-        font-size: 1.3rem;
-        color: #2d4a2d;
-        margin: 0 0 4px 0;
-        }
+    h2 {
+      font-size: 1.3rem;
+      color: #2d4a2d;
+      margin: 0 0 4px 0;
+    }
 
-        .subtitle {
-        font-size: 0.85rem;
-        color: #888;
-        font-style: italic;
-        margin: 0 0 4px 0;
-        border-left: 3px solid #3a7d44;
-        padding-left: 8px;
-        min-height: 1.2em;
-        }
+    .subtitle {
+      font-size: 0.85rem;
+      color: #888;
+      font-style: italic;
+      margin: 0 0 4px 0;
+      border-left: 3px solid #3a7d44;
+      padding-left: 8px;
+      min-height: 1.2em;
+    }
 
-        .source {
-        font-size: 0.75rem;
-        color: #888;
-        margin-top: 10px;
-        }
+    .narrative {
+      font-size: 0.88rem;
+      color: #444;
+      margin: 0 0 20px 0;
+      max-width: 720px;
+      line-height: 1.6;
+      padding-left: 11px;
+    }
 
-        .axis text {
-        fill: #555;
-        font-size: 0.75rem;
-        font-family: Georgia, serif;
-        }
+    .source {
+      font-size: 0.75rem;
+      color: #888;
+      margin-top: 10px;
+    }
 
-        .axis line,
-        .axis path {
-        stroke: #ccc;
-        }
+    .area-fill {
+      fill: #3a7d44;
+      opacity: 0.15; 
+    }
 
-        .grid line {
-        stroke: #ddd;
-        stroke-dasharray: 3, 3;
-        }
+    .main-line {
+      fill: none;
+      stroke: #3a7d44;
+      stroke-width: 2.5px;
+    }
 
-        .grid path {
-        stroke-width: 0;
-        }
+    .data-dot {
+      fill: #3a7d44;
+    }
 
-        .legend-label {
-        font-size: 0.75rem;
-        fill: #444;
-        font-family: Georgia, serif;
-        }
-    </style>
-    </head>
-    <body>
+    .axis text {
+      fill: #555;
+      font-size: 0.75rem;
+      font-family: Georgia, serif;
+    }
+
+    .axis line,
+    .axis path {
+      stroke: #ccc;
+    }
+
+    .grid line {
+      stroke: #ddd;
+      stroke-dasharray: 3, 3;
+    }
+
+    .grid path {
+      stroke-width: 0;
+    }
+
+    .ann-line {
+      stroke: #888;
+      stroke-width: 1px;
+      stroke-dasharray: 4, 3;
+    }
+
+    .ann-dot {
+      fill: #2d4a2d;
+    }
+
+    .ann-title {
+      font-size: 0.72rem;
+      font-weight: bold;
+      fill: #2d4a2d;
+      font-family: Georgia, serif;
+    }
+
+    .ann-body {
+      font-size: 0.70rem;
+      fill: #444;
+      font-family: Georgia, serif;
+    }
+  </style>
+</head>
+<body>
 
 <div class="chart-wrapper">
   <h2>SF Eviction Notices Filed Per Year (1997–2025)</h2>
-  <p class="subtitle">Annual eviction filings reflect the economic pressures shaping San Francisco's housing crisis over nearly three decades. <strong>[Will add more text and context to the events shown in the chart or will add context through interaction]</strong></p>
+  <p class="subtitle">[ Add subtitle here ]</p>
+  <p class="narrative">
+    Annual eviction filings reflect the economic pressures shaping San Francisco's
+    housing crisis over nearly three decades.
+  </p>
   <div id="chart"></div>
   <p class="source">Source: SF Rent Arbitration Board via DataSF · Eviction Notices dataset (as of April 2026)</p>
 </div>
 
 <script>
-  // lx/ly = offset from the data point to where the label sits
-  // anchor = text-anchor for the label ("start", "middle", "end")
   const annotations = [
-    {
-      year: 1998,
-      title: "Dot-com boom peak:",
-      body: "evictions surge",
-      lx: 8,
-      ly: -62,
-      anchor: "start"
-    },
-    {
-      year: 2001,
-      title: "Dot-com bust:",
-      body: "rapid decline",
-      lx: 55,
-      ly: -62,
-      anchor: "start"
-    },
-    {
-      year: 2009,
-      title: "2008 Financial Crisis:",
-      body: "filings hit decade low",
-      lx: -55,
-      ly: -90,
-      anchor: "start"
-    },
-    {
-      year: 2016,
-      title: "Tech boom 2.0:",
-      body: "evictions near 1990s highs",
-      lx: 8,
-      ly: -62,
-      anchor: "start"
-    },
-    {
-      year: 2020,
-      title: "COVID-19 crisis:",
-      body: "sharp drop in filings",
-      lx: -20,
-      ly: -142,
-      anchor: "start"
-    },
-    {
-      year: 2023,
-      title: "Post-pandemic:",
-      body: "filings remain suppressed",
-      lx: -45,
-      ly: -100,
-      anchor: "start"
-    },
+    { year: 1998, title: "Dot-com boom peak:",    body: "evictions surge",            lx: 8,    ly: -62, anchor: "start"  },
+    { year: 2001, title: "Dot-com bust:",          body: "rapid decline",              lx: 20, ly: -62, anchor: "start"  },
+    { year: 2009, title: "2008 Financial Crisis:", body: "filings hit decade low",     lx: -15,    ly: -80,  anchor: "start"  },
+    { year: 2016, title: "Tech boom 2.0:",         body: "evictions near 1990s highs", lx: 0, ly: -80, anchor: "start"  },
+    { year: 2020, title: "COVID-19 moratorium:",   body: "sharp drop in filings",      lx: -15,    ly: -120, anchor: "start"  },
+    { year: 2023, title: "Post-pandemic stall:",   body: "filings remain suppressed",  lx: -50,    ly: -80, anchor: "start"  },
   ];
 
-  // Layout
   const margin = { top: 20, right: 30, bottom: 45, left: 58 };
   const totalW = 820;
   const totalH = 430;
@@ -146,30 +146,25 @@
     .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
-  // Load & aggregate CSV
   d3.csv("/data/evictions_clean.csv").then(raw => {
 
-    // Count evictions per year
     const counts = d3.rollup(raw, v => v.length, d => +d.year);
     const data = Array.from(counts, ([year, count]) => ({ year, count }))
       .filter(d => d.year >= 1997 && d.year <= 2025)
       .sort((a, b) => a.year - b.year);
 
-    // Scales
     const x = d3.scaleLinear()
       .domain([1997, 2025])
       .range([0, W]);
 
     const y = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.count) * 1.28])
+      .domain([0, d3.max(data, d => d.count) * 1.38])
       .range([H, 0]);
 
-    // Gridlines
     svg.append("g")
       .attr("class", "grid")
       .call(d3.axisLeft(y).tickSize(-W).tickFormat("").ticks(6));
 
-    // Area
     const areaGen = d3.area()
       .x(d => x(d.year))
       .y0(H)
@@ -181,7 +176,6 @@
       .attr("class", "area-fill")
       .attr("d", areaGen);
 
-    // Line
     const lineGen = d3.line()
       .x(d => x(d.year))
       .y(d => y(d.count))
@@ -192,7 +186,6 @@
       .attr("class", "main-line")
       .attr("d", lineGen);
 
-    // Dots
     svg.selectAll(".data-dot")
       .data(data)
       .enter()
@@ -202,13 +195,11 @@
         .attr("cy", d => y(d.count))
         .attr("r", 3);
 
-    // X Axis
     svg.append("g")
       .attr("class", "axis")
       .attr("transform", `translate(0,${H})`)
       .call(d3.axisBottom(x).tickFormat(d3.format("d")).ticks(15));
 
-    // Y Axis
     svg.append("g")
       .attr("class", "axis")
       .call(d3.axisLeft(y).ticks(6).tickFormat(d => d.toLocaleString()));
@@ -223,21 +214,19 @@
       .style("font-family", "Georgia, serif")
       .text("Eviction Notices Filed");
 
-    // Annotations
     annotations.forEach(ann => {
       const pt = data.find(d => d.year === ann.year);
       if (!pt) return;
 
-      const cx = x(pt.year);
-      const cy = y(pt.count);
+      const cx     = x(pt.year);
+      const cy     = y(pt.count);
       const labelX = cx + ann.lx;
       const labelY = cy + ann.ly;
       const tipY   = ann.ly < 0 ? labelY + 28 : labelY;
 
       svg.append("circle")
         .attr("class", "ann-dot")
-        .attr("cx", cx)
-        .attr("cy", cy)
+        .attr("cx", cx).attr("cy", cy)
         .attr("r", 5);
 
       svg.append("line")
