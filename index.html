@@ -238,7 +238,7 @@ function showTip(event, html) {
         .attr("fill", d => scale(counts.get(d.properties.nhood)||0));
     }
 
-    Promise.all([d3.csv("/data/evictions_clean.csv"), d3.json("/data/Analysis_Neighborhoods.geojson")])
+    Promise.all([d3.csv("data/evictions_clean.csv"), d3.json("data/Analysis_Neighborhoods.geojson")])
         .then(([raw, geo]) => {
         const EXCLUDE = new Set(["Treasure Island"]);
         const fitGeo = { type:"FeatureCollection", features: geo.features.filter(f=>!EXCLUDE.has(f.properties.nhood)) };
@@ -292,7 +292,7 @@ function showTip(event, html) {
         .attr("width", totalW).attr("height", totalH)
         .append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
-    d3.csv("/data/evictions_clean.csv").then(raw => {
+    d3.csv("data/evictions_clean.csv").then(raw => {
         const filtered = raw.filter(d => d["Neighborhood - Analysis"] && d.primary_cause);
         const nTotals  = d3.rollup(filtered, v=>v.length, d=>d["Neighborhood - Analysis"]);
         const top20    = Array.from(nTotals.entries()).sort((a,b)=>b[1]-a[1]).slice(0,20).map(([n])=>n);
@@ -363,7 +363,7 @@ function showTip(event, html) {
         .attr("width",totalW).attr("height",totalH)
         .append("g").attr("transform",`translate(${margin.left},${margin.top})`);
 
-    d3.csv("/data/evictions_clean.csv").then(raw => {
+    d3.csv("data/evictions_clean.csv").then(raw => {
         const counts = d3.rollup(raw, v=>v.length, d=>+d.year);
         const data   = Array.from(counts, ([year,count])=>({year,count}))
         .filter(d=>d.year>=1997&&d.year<=2025).sort((a,b)=>a.year-b.year);
@@ -439,7 +439,7 @@ function showTip(event, html) {
         .attr("width",totalW).attr("height",totalH)
         .append("g").attr("transform",`translate(${margin.left},${margin.top})`);
 
-    d3.csv("/data/evictions_clean.csv").then(raw => {
+    d3.csv("data/evictions_clean.csv").then(raw => {
         const monthData = MONTH_NAMES.map((name,idx) => {
         const rows = raw.filter(d=>+d.month===idx+1);
         const entry = { month: name };
