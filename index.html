@@ -6,34 +6,19 @@
     <title>Get Out! — A Data-Driven Narrative of Housing Displacement in San Francisco</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
     <link rel="stylesheet" href="index.css" />
+</head>
+<body>
 
-    <!-- HERO -->
-    <section class="hero">
+<!-- HERO -->
+<!-- Feedback #4: Removed 01-04 objective cards to improve data-to-ink ratio -->
+<section class="hero">
     <p class="hero-eyebrow">CS360 Data Visualization · Final Project</p>
     <h1><em>Get Out!</em> A Data-Driven Narrative of<br>Housing Displacement in San Francisco</h1>
     <p class="hero-byline">By Adrienne Dominique Sy Chu</p>
     <div class="hero-divider"></div>
     <p class="hero-intro">
-        San Francisco has long struggled with a housing crisis that has forced thousands of residents out of their homes. Eviction notices tell the story of who is being displaced, where it is happening, and why, but raw data alone can be hard to understand. This project turns decades of eviction records from the SF Rent Board into a visual narrative. Each visualization was built with the assistance of Claude AI, used not just to write code, but to craft the narrative that connects the data to the human stories behind it. The goal is to make the numbers feel real and help everyday people understand one of San Francisco's most pressing issues.
+        San Francisco has long struggled with a housing crisis that has forced thousands of residents out of their homes. Eviction notices tell the story of who is being displaced, where it is happening, and why — but raw data alone can be hard to understand. This project turns nearly three decades of eviction records from the SF Rent Board into a visual story that anyone can follow, making the numbers feel real and helping everyday people understand one of San Francisco's most pressing issues.
     </p>
-    <div class="objectives">
-        <div class="objective-card">
-        <div class="objective-num">01</div>
-        <div class="objective-text">Reveal geographic patterns of housing displacement across SF's 41 neighborhoods</div>
-        </div>
-        <div class="objective-card">
-        <div class="objective-num">02</div>
-        <div class="objective-text">Discover the most common causes of eviction and how they vary by neighborhood</div>
-        </div>
-        <div class="objective-card">
-        <div class="objective-num">03</div>
-        <div class="objective-text">Compare housing trends tied to real-world events like the 2008 crisis and COVID-19</div>
-        </div>
-        <div class="objective-card">
-        <div class="objective-num">04</div>
-        <div class="objective-text">Explore how eviction causes vary across the months of the year</div>
-        </div>
-    </div>
     <p class="hero-source">Data: SF Rent Arbitration Board via DataSF · Eviction Notices (1997–2025)</p>
 </section>
 
@@ -44,56 +29,55 @@
     <div class="chart-wrapper">
         <h2>Eviction Notices by SF Neighborhood (1997–2025)</h2>
         <p class="subtitle">Choropleth map of geographic concentration of eviction notices across San Francisco's 41 neighborhoods</p>
+        <!-- Narrative trimmed to 3 sentences max per feedback -->
         <p class="narrative">
-        Housing displacement in San Francisco is deeply uneven across neighborhoods, with historically high-density rental areas bearing a disproportionate share of eviction filings over the past three decades. The Mission District alone accounts for over 11% of all citywide notices filed since 1997, reflecting persistent pressure on lower-income and working-class communities in the city's most rent-burdened corridors. Use the year slider to trace how the geography of displacement has shifted in response to economic cycles, gentrification, and policy changes.
+            Housing displacement in San Francisco is deeply uneven, with historically high-density rental areas bearing a disproportionate share of eviction filings over the past three decades. The Mission District alone accounts for over 11% of all citywide notices filed since 1997. Use the year slider to trace how the geography of displacement has shifted in response to economic cycles, gentrification, and policy changes.
         </p>
-        <br>
-
         <div class="map-layout">
-        <div id="map-svg-container"></div>
-        <div class="controls-panel">
-            <div>
-            <div class="legend-title">Eviction Count</div>
-            <div class="legend-bar-container">
-                <svg id="legend-svg" width="140" height="16"
-                    style="border-radius:2px; outline: 1px solid #bbb;"></svg>
-                <div class="legend-labels">
-                <span id="legend-min">0</span>
-                <span id="legend-max"></span>
+            <div id="map-svg-container"></div>
+            <div class="controls-panel">
+                <div>
+                    <div class="legend-title">Eviction Count</div>
+                    <div class="legend-bar-container">
+                        <svg id="legend-svg" width="140" height="16" style="border-radius:2px; outline: 1px solid #bbb;"></svg>
+                        <div class="legend-labels">
+                            <span id="legend-min">0 (green)</span>
+                            <span id="legend-max"></span>
+                        </div>
+                    </div>
                 </div>
+                <div class="slider-section">
+                    <div class="slider-label">Year</div>
+                    <div class="year-display" id="year-display">All Years</div>
+                    <input type="range" id="year-slider" min="0" max="29" step="1" value="0" />
+                    <div class="slider-endpoints">
+                        <span>All</span><span>1997</span><span>2025</span>
+                    </div>
+                </div>
+                <div>
+                    <div class="top5-title">Top 5 Neighborhoods</div>
+                    <div id="top5-bars"></div>
+                </div>
+                <div class="zoom-hint">Scroll to zoom · drag to pan</div>
             </div>
-            </div>
-            <div class="slider-section">
-            <div class="slider-label">Year</div>
-            <div class="year-display" id="year-display">All Years</div>
-            <input type="range" id="year-slider" min="0" max="29" step="1" value="0" />
-            <div class="slider-endpoints">
-                <span>All</span><span>1997</span><span>2025</span>
-            </div>
-            </div>
-            <div>
-            <div class="top5-title">Top 5 Neighborhoods</div>
-            <div id="top5-bars"></div>
-            </div>
-            <div class="zoom-hint">Scroll to zoom · drag to pan</div>
         </div>
-        </div>
-        
     </div>
-    </section>
+</section>
 
-    <div class="section-divider"></div>
+<div class="section-divider"></div>
 
-    <!-- CHART 2 — HEATMAP -->
-    <section class="chart-section">
+<!-- CHART 2 — HEATMAP -->
+<section class="chart-section">
     <div class="chart-wrapper">
         <h2>Eviction Causes by SF Neighborhood (1997–2025)</h2>
         <p class="subtitle">Heatmap of eviction cause concentrations across San Francisco's 20 highest-volume neighborhoods, sorted by total filings</p>
+        <!-- Narrative trimmed to 3 sentences max per feedback -->
         <p class="narrative">
-        The causes driving eviction are not distributed evenly across San Francisco's neighborhoods, with each area carries a distinct displacement fingerprint shaped by its housing stock, tenant demographics, and proximity to economic pressure. Owner Move-In and Breach filings dominate high-density residential corridors like the Mission, Sunset/Parkside, and Outer Richmond, while Nuisance-based evictions are disproportionately concentrated in areas with larger multi-unit buildings and transient populations. The 20 neighborhoods shown here account for over 80% of all eviction notices filed citywide since 1997; hover the darkest cells to explore the stories behind each neighborhood's dominant eviction cause.
+            The causes driving eviction are not distributed evenly — each neighborhood carries a distinct displacement fingerprint shaped by its housing stock and demographics. Owner Move-In and Breach filings dominate high-density corridors like the Mission, while Nuisance evictions concentrate in areas with larger multi-unit buildings. These 20 neighborhoods account for over 80% of all citywide notices filed since 1997.
         </p>
+        <!-- Feedback #3: Note explaining which cells have tooltips -->
+        <p class="heatmap-note">★ Darker cells (top ~40% by volume per cause) are interactive — hover to reveal neighborhood context.</p>
         <div id="chart-heatmap"></div>
-        
     </div>
 </section>
 
@@ -103,39 +87,73 @@
 <section class="chart-section">
     <div class="chart-wrapper">
         <h2>SF Eviction Notices Filed Per Year (1997–2025)</h2>
-        <p class="subtitle">Line chart of annual eviction filings reflect the economic pressures shaping San Francisco's housing crisis</p>
+        <p class="subtitle">Line chart of annual eviction filings reflecting the economic pressures shaping San Francisco's housing crisis</p>
+        <!-- Narrative trimmed to 3 sentences max per feedback -->
         <p class="narrative">
-        Over the past 28 years, San Francisco's eviction landscape has been shaped by a succession of economic booms, financial crises, and public health emergencies, each leaving a distinct imprint on the pace of displacement. Filings surged during the late 1990s dot-com era, collapsed after the 2001 bust, and climbed again through the mid-2010s tech boom before plummeting during the COVID-19 moratorium of 2020. The post-pandemic period reveals a city still in recovery, with filings remaining well below pre-pandemic highs even as housing
-        pressure has intensified, which is a pattern that raises urgent questions about the sustainability of current tenant protections.
+            Over nearly three decades, San Francisco's eviction filings have tracked closely with economic booms and crises — surging in the dot-com era, collapsing after 2001, and spiking again during the mid-2010s tech boom. The COVID-19 moratorium caused the sharpest single-year drop on record in 2020. Hover any data point or annotation to explore the historical context behind each shift.
         </p>
         <div id="chart-linechart"></div>
-
     </div>
-    </section>
+</section>
 
-    <div class="section-divider"></div>
+<div class="section-divider"></div>
 
-    <!-- CHART 4 — STACKED BAR CHART -->
-    <section class="chart-section">
+<!-- CHART 4 — STACKED BAR CHART -->
+<section class="chart-section">
     <div class="chart-wrapper">
         <h2>Eviction Notices by Cause Across Each Month (All Years Combined)</h2>
-        <p class="subtitle">Stacked bar chart of all eviction types during specific months, revealing seasonal patterns in how San Francisco displacements.</p>
+        <p class="subtitle">Stacked bar chart of eviction types by month, revealing seasonal patterns in San Francisco displacement</p>
+        <!-- Narrative trimmed to 3 sentences max per feedback -->
         <p class="narrative">
-        Eviction filings in San Francisco follow distinct seasonal rhythms that reflect the underlying
-        motivations of landlords and the pressures of the city's rental market cycle. Owner Move-In
-        notices surge sharply in the spring — peaking in April through June — as landlords time
-        displacement to coincide with the end of academic years and the start of summer lease
-        turnover. Breach and Nuisance filings climb in late summer and fall, while Non-Payment
-        notices rise in September and again in December, tracking closely with economic stress points
-        in the rental calendar.
+            Eviction filings in San Francisco follow distinct seasonal rhythms tied to the rental market cycle. Owner Move-In notices peak in spring as landlords align displacement with summer lease turnover, while Breach and Nuisance filings climb in late summer and fall. Hover any bar to read a focused seasonal insight for that month.
         </p>
         <div id="chart-barchart"></div>
-        
     </div>
-    </section>
+</section>
 
-    <!-- FOOTER -->
-    <footer class="site-footer">
+<div class="section-divider"></div>
+
+<!-- TECHNOLOGIES & SKILLS SECTION — mirrors hero style, cards like removed objectives -->
+<section class="tech-section">
+    <p class="tech-eyebrow">Tools & Methods</p>
+    <h2>Technologies & Skills Used</h2>
+    <div class="tech-divider"></div>
+    <p class="tech-intro fade-in-tech">
+        This project was built entirely from scratch using open web technologies and real civic data.
+        Claude AI was used throughout — not just for code, but to help craft the narrative layer
+        that connects raw statistics to the human stories behind each eviction notice.
+    </p>
+    <div class="tech-cards fade-in-tech">
+        <div class="tech-card">
+            <div class="tech-icon">📊</div>
+            <div class="tech-name">D3.js</div>
+            <div class="tech-desc">All four interactive visualizations — maps, heatmap, line chart, bar chart</div>
+        </div>
+        <div class="tech-card">
+            <div class="tech-icon">🌐</div>
+            <div class="tech-name">HTML & CSS</div>
+            <div class="tech-desc">Scrollytelling layout, hero section, animations, and responsive design</div>
+        </div>
+        <div class="tech-card">
+            <div class="tech-icon">⚙️</div>
+            <div class="tech-name">JavaScript</div>
+            <div class="tech-desc">Scroll observer, shared tooltip logic, and interactive controls</div>
+        </div>
+        <div class="tech-card">
+            <div class="tech-icon">🐍</div>
+            <div class="tech-name">Python</div>
+            <div class="tech-desc">Data cleaning and aggregation with pandas and GeoPandas</div>
+        </div>
+        <div class="tech-card">
+            <div class="tech-icon">🗺️</div>
+            <div class="tech-name">GeoJSON</div>
+            <div class="tech-desc">SF neighborhood boundary files for the choropleth map projection</div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
     <p><strong>Get Out! A Data-Driven Narrative of Housing Displacement in San Francisco</strong></p>
     <p>By Adrienne Dominique Sy Chu · CS360 Data Visualization Final Project</p>
     <p style="margin-top:8px;">
@@ -144,33 +162,41 @@
     </p>
 </footer>
 
-<!-- Shared tooltip -->
 <div class="tooltip" id="shared-tooltip"></div>
 
 <script>
 
-//Shared tooltip reference 
-const tooltip = d3.select("#shared-tooltip");
+// Scroll observer — chart sections, hero, and tech section inner elements
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add("visible");
+    });
+}, { threshold: 0.1 });
 
+document.querySelectorAll(".chart-section, .hero, .fade-in-tech").forEach(s => observer.observe(s));
+
+// Shared tooltip
+const tooltip = d3.select("#shared-tooltip");
 function showTip(event, html) {
     tooltip.style("opacity", 1)
         .style("left", (event.pageX + 14) + "px")
         .style("top",  (event.pageY - 30) + "px")
         .html(html);
-    }
-    function hideTip() { tooltip.style("opacity", 0); }
+}
+function hideTip() { tooltip.style("opacity", 0); }
 
 
-    // CHART 1 — CHOROPLETH MAP
-    (function() {
-    const colorRange = ["#e8f5e9","#c8e6c9","#81c784","#388e3c","#1b5e20"];
+// CHART 1 — CHOROPLETH MAP
+// Feedback #2: Updated to Spectral diverging palette (green=low, orange=high)
+(function() {
+    // Spectral 5-class from ColorBrewer: low evictions = green, high = orange/red
+    const colorRange = ["#abdda4", "#ffffbf", "#fdae61", "#f46d43", "#d53e4f"];
     let selectedYear = null, yearlyMap = new Map(), allTotals = new Map(), geoFeatures = null;
 
     const W_MAP = 600, H_MAP = 500;
 
     const svg = d3.select("#map-svg-container")
         .append("svg").attr("width", W_MAP).attr("height", H_MAP);
-
     svg.append("rect").attr("width", W_MAP).attr("height", H_MAP).attr("fill", "#a8cfe0");
 
     const mapG = svg.append("g");
@@ -188,14 +214,17 @@ function showTip(event, html) {
 
     function makeColorScale(counts) {
         const maxVal = d3.max(Array.from(counts.values()).filter(v=>v>0)) || 1;
-        return d3.scaleSequential().domain([0,maxVal]).interpolator(d3.interpolateRgbBasis(colorRange));
+        return d3.scaleSequential().domain([0, maxVal]).interpolator(d3.interpolateRgbBasis(colorRange));
     }
 
+    // Feedback #1: Legend SVG width matches container so it's never cut off
     function drawLegend(counts) {
-        const ls = d3.select("#legend-svg"); ls.selectAll("*").remove();
+        const ls = d3.select("#legend-svg");
+        ls.selectAll("*").remove();
         const defs = ls.append("defs");
         const grad = defs.append("linearGradient").attr("id","map-legend-grad");
-        colorRange.forEach((c,i) => grad.append("stop").attr("offset",`${i/(colorRange.length-1)*100}%`).attr("stop-color",c));
+        colorRange.forEach((c,i) =>
+            grad.append("stop").attr("offset",`${i/(colorRange.length-1)*100}%`).attr("stop-color",c));
         ls.append("rect").attr("width",140).attr("height",16).attr("rx",2).style("fill","url(#map-legend-grad)");
         const maxVal = d3.max(Array.from(counts.values()).filter(v=>v>0)) || 0;
         d3.select("#legend-min").text("0");
@@ -207,13 +236,13 @@ function showTip(event, html) {
         const maxC = top5[0]?.[1] || 1;
         const el = document.getElementById("top5-bars"); el.innerHTML = "";
         top5.forEach(([name,count],i) => {
-        const pct = ((count/maxC)*100).toFixed(0);
-        const short = name.length>19 ? name.slice(0,17)+"…" : name;
-        const row = document.createElement("div"); row.className = "top5-row";
-        row.innerHTML = `<div class="top5-label">${i+1}. ${short}</div>
-            <div class="top5-bar-track"><div class="top5-bar-fill" style="width:${pct}%"></div></div>
-            <div class="top5-count">${count.toLocaleString()}</div>`;
-        el.appendChild(row);
+            const pct = ((count/maxC)*100).toFixed(0);
+            const short = name.length>19 ? name.slice(0,17)+"…" : name;
+            const row = document.createElement("div"); row.className = "top5-row";
+            row.innerHTML = `<div class="top5-label">${i+1}. ${short}</div>
+                <div class="top5-bar-track"><div class="top5-bar-fill" style="width:${pct}%"></div></div>
+                <div class="top5-count">${count.toLocaleString()}</div>`;
+            el.appendChild(row);
         });
     }
 
@@ -224,30 +253,30 @@ function showTip(event, html) {
         const scale = makeColorScale(counts);
         const total = d3.sum(Array.from(counts.values()));
         mapG.selectAll(".neighborhood").data(geoFeatures, d=>d.properties.nhood)
-        .join(enter => enter.append("path").attr("class","neighborhood").attr("d",pathGen)
-            .on("mousemove", (event,d) => {
-            const name=d.properties.nhood, count=counts.get(name)||0;
-            const pct = total>0?((count/total)*100).toFixed(1):"0.0";
-            showTip(event,`<div class="tooltip-name">${name}</div>
-                <div class="tooltip-count">${count.toLocaleString()} eviction notices</div>
-                <div class="tooltip-pct">${pct}% of citywide total</div>`);
-            })
-            .on("mouseleave", hideTip),
-            update => update)
-        .transition().duration(300)
-        .attr("fill", d => scale(counts.get(d.properties.nhood)||0));
+            .join(enter => enter.append("path").attr("class","neighborhood").attr("d",pathGen)
+                .on("mousemove", (event,d) => {
+                    const name=d.properties.nhood, count=counts.get(name)||0;
+                    const pct = total>0?((count/total)*100).toFixed(1):"0.0";
+                    showTip(event,`<div class="tooltip-name">${name}</div>
+                        <div class="tooltip-count">${count.toLocaleString()} eviction notices</div>
+                        <div class="tooltip-pct">${pct}% of citywide total</div>`);
+                })
+                .on("mouseleave", hideTip),
+                update => update)
+            .transition().duration(300)
+            .attr("fill", d => scale(counts.get(d.properties.nhood)||0));
     }
 
     Promise.all([d3.csv("data/evictions_clean.csv"), d3.json("data/Analysis_Neighborhoods.geojson")])
         .then(([raw, geo]) => {
-        const EXCLUDE = new Set(["Treasure Island"]);
-        const fitGeo = { type:"FeatureCollection", features: geo.features.filter(f=>!EXCLUDE.has(f.properties.nhood)) };
-        projection.fitExtent([[80,100],[W_MAP-50,H_MAP+5]], fitGeo);
-        const nested = d3.rollup(raw, v=>v.length, d=>+d.year, d=>d["Neighborhood - Analysis"]);
-        nested.forEach((nh,yr) => yearlyMap.set(yr,nh));
-        allTotals   = d3.rollup(raw, v=>v.length, d=>d["Neighborhood - Analysis"]);
-        geoFeatures = geo.features;
-        updateMap();
+            const EXCLUDE = new Set(["Treasure Island"]);
+            const fitGeo = { type:"FeatureCollection", features: geo.features.filter(f=>!EXCLUDE.has(f.properties.nhood)) };
+            projection.fitExtent([[80,100],[W_MAP-50,H_MAP+5]], fitGeo);
+            const nested = d3.rollup(raw, v=>v.length, d=>+d.year, d=>d["Neighborhood - Analysis"]);
+            nested.forEach((nh,yr) => yearlyMap.set(yr,nh));
+            allTotals   = d3.rollup(raw, v=>v.length, d=>d["Neighborhood - Analysis"]);
+            geoFeatures = geo.features;
+            updateMap();
         });
 
     document.getElementById("year-slider").addEventListener("input", function() {
@@ -256,12 +285,16 @@ function showTip(event, html) {
         else { selectedYear=1996+idx; document.getElementById("year-display").textContent=selectedYear; }
         updateMap();
     });
-    })();
+})();
 
-    // CHART 2 — HEATMAP
-    (function() {
+
+// CHART 2 — HEATMAP
+// Feedback #2: Updated to Spectral diverging palette
+// Feedback #3: Note added in HTML above chart
+(function() {
     const TOP_CAUSES = ["Owner Move In","Breach","Nuisance","Non Payment","Ellis Act WithDrawal","Late Payments","Roommate Same Unit","Capital Improvement"];
-    const COLOR_RANGE = ["#e8f5e9","#c8e6c9","#81c784","#388e3c","#1b5e20"];
+    // Spectral 5-class from ColorBrewer: low evictions = green, high = orange/red
+    const COLOR_RANGE = ["#abdda4", "#ffffbf", "#fdae61", "#f46d43", "#d53e4f"];
     const STANDOUT = 0.6;
 
     const narratives = {
@@ -296,16 +329,19 @@ function showTip(event, html) {
         const filtered = raw.filter(d => d["Neighborhood - Analysis"] && d.primary_cause);
         const nTotals  = d3.rollup(filtered, v=>v.length, d=>d["Neighborhood - Analysis"]);
         const top20    = Array.from(nTotals.entries()).sort((a,b)=>b[1]-a[1]).slice(0,20).map(([n])=>n);
-        const nested   = d3.rollup(filtered.filter(d=>top20.includes(d["Neighborhood - Analysis"])), v=>v.length, d=>d["Neighborhood - Analysis"], d=>d.primary_cause);
+        const nested   = d3.rollup(
+            filtered.filter(d=>top20.includes(d["Neighborhood - Analysis"])),
+            v=>v.length, d=>d["Neighborhood - Analysis"], d=>d.primary_cause);
 
         const cells = [];
         top20.forEach(nhood => {
-        const cm = nested.get(nhood)||new Map();
-        TOP_CAUSES.forEach(cause => cells.push({ nhood, cause, count: cm.get(cause)||0 }));
+            const cm = nested.get(nhood)||new Map();
+            TOP_CAUSES.forEach(cause => cells.push({ nhood, cause, count: cm.get(cause)||0 }));
         });
 
         const causeMax = new Map();
-        TOP_CAUSES.forEach(cause => causeMax.set(cause, d3.max(cells.filter(c=>c.cause===cause), c=>c.count)||1));
+        TOP_CAUSES.forEach(cause =>
+            causeMax.set(cause, d3.max(cells.filter(c=>c.cause===cause), c=>c.count)||1));
 
         const norm = (cause, count) => count / causeMax.get(cause);
         const cellColor = (cause, count) => d3.interpolateRgbBasis(COLOR_RANGE)(norm(cause,count));
@@ -314,38 +350,49 @@ function showTip(event, html) {
         const y = d3.scaleBand().domain(top20).range([0,H]).padding(0.06);
 
         svg.selectAll(".cell").data(cells).enter().append("rect")
-        .attr("class", d => (norm(d.cause,d.count)>=STANDOUT && narratives[`${d.nhood}|${d.cause}`]) ? "cell cell-standout" : "cell")
-        .attr("x", d=>x(d.cause)).attr("y", d=>y(d.nhood))
-        .attr("width", x.bandwidth()).attr("height", y.bandwidth())
-        .attr("rx", 2).attr("fill", d=>cellColor(d.cause,d.count))
-        .on("mousemove", (event,d) => {
-            const text = narratives[`${d.nhood}|${d.cause}`];
-            if (!text) return;
-            showTip(event,`<div class="tooltip-header">${d.nhood} — ${d.cause}</div><div class="tooltip-insight">${text}</div>`);
-        })
-        .on("mouseleave", hideTip);
+            .attr("class", d => (norm(d.cause,d.count)>=STANDOUT && narratives[`${d.nhood}|${d.cause}`])
+                ? "cell cell-standout" : "cell")
+            .attr("x", d=>x(d.cause)).attr("y", d=>y(d.nhood))
+            .attr("width", x.bandwidth()).attr("height", y.bandwidth())
+            .attr("rx", 2).attr("fill", d=>cellColor(d.cause,d.count))
+            .on("mousemove", (event,d) => {
+                const text = narratives[`${d.nhood}|${d.cause}`];
+                if (!text) return;
+                showTip(event,`<div class="tooltip-header">${d.nhood} — ${d.cause}</div><div class="tooltip-insight">${text}</div>`);
+            })
+            .on("mouseleave", hideTip);
 
         svg.append("g").attr("class","axis").call(d3.axisTop(x).tickSize(0))
-        .selectAll("text")
-            .style("font-size","0.70rem").style("font-family","Georgia, serif").style("fill","#444")
-            .attr("text-anchor","start").attr("dx","0.3em").attr("dy","-0.4em")
-            .attr("transform","rotate(-40)");
+            .selectAll("text")
+                .style("font-size","0.70rem").style("font-family","Georgia, serif").style("fill","#444")
+                .attr("text-anchor","start").attr("dx","0.3em").attr("dy","-0.4em")
+                .attr("transform","rotate(-40)");
 
         svg.append("g").attr("class","axis").call(d3.axisLeft(y).tickSize(0))
-        .selectAll("text").style("font-size","0.72rem").style("font-family","Georgia, serif").style("fill","#444").attr("dx","-0.4em");
+            .selectAll("text").style("font-size","0.72rem").style("font-family","Georgia, serif")
+            .style("fill","#444").attr("dx","-0.4em");
 
-        const legendW=250, legendH=11, legendX=(W-legendW)/2, legendY=H+26;
+        // Feedback #1: Legend spans full grid width, never cut off
+        const legendW = W, legendH = 11, legendX = 0, legendY = H + 26;
         const lgDefs = svg.append("defs");
         const grad   = lgDefs.append("linearGradient").attr("id","hm-grad");
-        COLOR_RANGE.forEach((c,i) => grad.append("stop").attr("offset",`${i/(COLOR_RANGE.length-1)*100}%`).attr("stop-color",c));
-        svg.append("rect").attr("x",legendX).attr("y",legendY).attr("width",legendW).attr("height",legendH).attr("rx",2).style("fill","url(#hm-grad)").style("outline","1px solid #bbb");
-        svg.append("text").attr("x",legendX).attr("y",legendY+legendH+14).attr("text-anchor","start").style("font-size","0.68rem").style("fill","#888").style("font-family","Georgia, serif").text("Fewer notices");
-        svg.append("text").attr("x",legendX+legendW).attr("y",legendY+legendH+14).attr("text-anchor","end").style("font-size","0.68rem").style("fill","#888").style("font-family","Georgia, serif").text("More notices (per cause)");
+        COLOR_RANGE.forEach((c,i) =>
+            grad.append("stop").attr("offset",`${i/(COLOR_RANGE.length-1)*100}%`).attr("stop-color",c));
+        svg.append("rect").attr("x",legendX).attr("y",legendY)
+            .attr("width",legendW).attr("height",legendH).attr("rx",2)
+            .style("fill","url(#hm-grad)").style("outline","1px solid #bbb");
+        svg.append("text").attr("x",legendX).attr("y",legendY+legendH+14)
+            .attr("text-anchor","start").style("font-size","0.68rem").style("fill","#888")
+            .style("font-family","Georgia, serif").text("Fewer notices (green)");
+        svg.append("text").attr("x",legendX+legendW).attr("y",legendY+legendH+14)
+            .attr("text-anchor","end").style("font-size","0.68rem").style("fill","#888")
+            .style("font-family","Georgia, serif").text("More notices (orange)");
     });
-    })();
+})();
 
-    // CHART 3 — LINE CHART
-    (function() {
+
+// CHART 3 — LINE CHART
+(function() {
     const annotations = [
         { year:1998, title:"Dot-com boom peak:",    body:"evictions surge",            context:"The late-1990s tech boom drove rapid rent increases and owner move-in evictions as landlords sought higher-paying tenants. Filings peaked near 3,000 annually.", lx:8,   ly:-62,  anchor:"start" },
         { year:2001, title:"Dot-com bust:",          body:"rapid decline",              context:"The collapse of the dot-com bubble triggered mass layoffs across the Bay Area tech sector, cooling the rental market and sharply reducing eviction pressure.",   lx:20,  ly:-62,  anchor:"start" },
@@ -366,48 +413,51 @@ function showTip(event, html) {
     d3.csv("data/evictions_clean.csv").then(raw => {
         const counts = d3.rollup(raw, v=>v.length, d=>+d.year);
         const data   = Array.from(counts, ([year,count])=>({year,count}))
-        .filter(d=>d.year>=1997&&d.year<=2025).sort((a,b)=>a.year-b.year);
+            .filter(d=>d.year>=1997&&d.year<=2025).sort((a,b)=>a.year-b.year);
 
         const x = d3.scaleLinear().domain([1997,2025]).range([0,W]);
         const y = d3.scaleLinear().domain([0, d3.max(data,d=>d.count)*1.38]).range([H,0]);
 
         svg.append("g").attr("class","grid").call(d3.axisLeft(y).tickSize(-W).tickFormat("").ticks(6));
-
         svg.append("path").datum(data).attr("class","area-fill")
-        .attr("d", d3.area().x(d=>x(d.year)).y0(H).y1(d=>y(d.count)).curve(d3.curveMonotoneX));
-
+            .attr("d", d3.area().x(d=>x(d.year)).y0(H).y1(d=>y(d.count)).curve(d3.curveMonotoneX));
         svg.append("path").datum(data).attr("class","main-line")
-        .attr("d", d3.line().x(d=>x(d.year)).y(d=>y(d.count)).curve(d3.curveMonotoneX));
+            .attr("d", d3.line().x(d=>x(d.year)).y(d=>y(d.count)).curve(d3.curveMonotoneX));
 
         svg.selectAll(".data-dot").data(data).enter().append("circle")
-        .attr("class","data-dot").attr("cx",d=>x(d.year)).attr("cy",d=>y(d.count)).attr("r",3)
-        .on("mousemove", (event,d) => {
-            const ann = annotations.find(a=>a.year===d.year);
-            showTip(event,`<div class="tooltip-year">${d.year}</div>
-            <div class="tooltip-count">${d.count.toLocaleString()} eviction notices</div>
-            ${ann?`<div class="tooltip-context">${ann.context}</div>`:""}`);
-        })
-        .on("mouseleave", hideTip);
+            .attr("class","data-dot").attr("cx",d=>x(d.year)).attr("cy",d=>y(d.count)).attr("r",3)
+            .on("mousemove", (event,d) => {
+                const ann = annotations.find(a=>a.year===d.year);
+                showTip(event,`<div class="tooltip-year">${d.year}</div>
+                    <div class="tooltip-count">${d.count.toLocaleString()} eviction notices</div>
+                    ${ann?`<div class="tooltip-context">${ann.context}</div>`:""}`);
+            })
+            .on("mouseleave", hideTip);
 
-        svg.append("g").attr("class","axis").attr("transform",`translate(0,${H})`).call(d3.axisBottom(x).tickFormat(d3.format("d")).ticks(15));
+        svg.append("g").attr("class","axis").attr("transform",`translate(0,${H})`)
+            .call(d3.axisBottom(x).tickFormat(d3.format("d")).ticks(15));
         svg.append("g").attr("class","axis").call(d3.axisLeft(y).ticks(6).tickFormat(d=>d.toLocaleString()));
-        svg.append("text").attr("transform","rotate(-90)").attr("y",-50).attr("x",-(H/2)).attr("text-anchor","middle").attr("fill","#555").style("font-size","0.75rem").style("font-family","Georgia, serif").text("Eviction Notices Filed");
+        svg.append("text").attr("transform","rotate(-90)").attr("y",-50).attr("x",-(H/2))
+            .attr("text-anchor","middle").attr("fill","#555").style("font-size","0.75rem")
+            .style("font-family","Georgia, serif").text("Eviction Notices Filed");
 
         annotations.forEach(ann => {
-        const pt = data.find(d=>d.year===ann.year); if(!pt) return;
-        const cx=x(pt.year), cy=y(pt.count), labelX=cx+ann.lx, labelY=cy+ann.ly, tipY=ann.ly<0?labelY+28:labelY;
-        svg.append("line").attr("class","ann-line").attr("x1",cx).attr("y1",cy).attr("x2",labelX).attr("y2",tipY);
-        svg.append("circle").attr("class","ann-dot").attr("cx",cx).attr("cy",cy).attr("r",5)
-            .on("mousemove", event => showTip(event,`<div class="tooltip-year">${ann.title.replace(":","")}</div><div class="tooltip-count">${pt.count.toLocaleString()} eviction notices</div><div class="tooltip-context">${ann.context}</div>`))
-            .on("mouseleave", hideTip);
-        svg.append("text").attr("class","ann-title").attr("x",labelX).attr("y",labelY).attr("text-anchor",ann.anchor).text(ann.title);
-        svg.append("text").attr("class","ann-body").attr("x",labelX).attr("y",labelY+14).attr("text-anchor",ann.anchor).text(ann.body);
+            const pt = data.find(d=>d.year===ann.year); if(!pt) return;
+            const cx=x(pt.year), cy=y(pt.count), labelX=cx+ann.lx, labelY=cy+ann.ly, tipY=ann.ly<0?labelY+28:labelY;
+            svg.append("line").attr("class","ann-line").attr("x1",cx).attr("y1",cy).attr("x2",labelX).attr("y2",tipY);
+            svg.append("circle").attr("class","ann-dot").attr("cx",cx).attr("cy",cy).attr("r",5)
+                .on("mousemove", event => showTip(event,`<div class="tooltip-year">${ann.title.replace(":","")}</div><div class="tooltip-count">${pt.count.toLocaleString()} eviction notices</div><div class="tooltip-context">${ann.context}</div>`))
+                .on("mouseleave", hideTip);
+            svg.append("text").attr("class","ann-title").attr("x",labelX).attr("y",labelY).attr("text-anchor",ann.anchor).text(ann.title);
+            svg.append("text").attr("class","ann-body").attr("x",labelX).attr("y",labelY+14).attr("text-anchor",ann.anchor).text(ann.body);
         });
     });
-    })();
+})();
 
-    // CHART 4 — STACKED BAR CHART
-    (function() {
+
+// CHART 4 — STACKED BAR CHART
+// Feedback #1: Tooltip now includes total count for the month
+(function() {
     const MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     const TOP_CAUSES  = ["Owner Move In","Breach","Nuisance","Ellis Act WithDrawal","Non Payment","Capital Improvement"];
     const colors = {
@@ -441,12 +491,12 @@ function showTip(event, html) {
 
     d3.csv("data/evictions_clean.csv").then(raw => {
         const monthData = MONTH_NAMES.map((name,idx) => {
-        const rows = raw.filter(d=>+d.month===idx+1);
-        const entry = { month: name };
-        TOP_CAUSES.forEach(c => { entry[c] = d3.sum(rows, d=>d[c]==="True"||d[c]==="true"?1:0); });
-        const topSet = new Set(TOP_CAUSES);
-        entry["Other"] = rows.filter(d=>!topSet.has(d.primary_cause)).length;
-        return entry;
+            const rows = raw.filter(d=>+d.month===idx+1);
+            const entry = { month: name, _total: rows.length };
+            TOP_CAUSES.forEach(c => { entry[c] = d3.sum(rows, d=>d[c]==="True"||d[c]==="true"?1:0); });
+            const topSet = new Set(TOP_CAUSES);
+            entry["Other"] = rows.filter(d=>!topSet.has(d.primary_cause)).length;
+            return entry;
         });
 
         const series = d3.stack().keys(causes)(monthData);
@@ -456,41 +506,38 @@ function showTip(event, html) {
         svg.append("g").attr("class","grid").call(d3.axisLeft(y).tickSize(-W).tickFormat("").ticks(6));
 
         svg.selectAll(".cause-group").data(series).enter().append("g").attr("fill",d=>colors[d.key])
-        .selectAll("rect").data(d=>d.map(pt=>({...pt,cause:d.key}))).enter().append("rect")
-            .attr("class","bar-segment")
-            .attr("x",d=>x(d.data.month)).attr("y",d=>y(d[1]))
-            .attr("height",d=>Math.max(0,y(d[0])-y(d[1]))).attr("width",x.bandwidth())
-            .on("mousemove",(event,d)=>showTip(event,`<div class="tooltip-month">${d.data.month}</div><div class="tooltip-insight">${seasonalInsights[d.data.month]}</div>`))
-            .on("mouseleave",hideTip);
+            .selectAll("rect").data(d=>d.map(pt=>({...pt,cause:d.key}))).enter().append("rect")
+                .attr("class","bar-segment")
+                .attr("x",d=>x(d.data.month)).attr("y",d=>y(d[1]))
+                .attr("height",d=>Math.max(0,y(d[0])-y(d[1]))).attr("width",x.bandwidth())
+                .on("mousemove",(event,d) => {
+                    // Feedback #1: Added total count to bar chart tooltip
+                    const total = d.data._total;
+                    showTip(event,`
+                        <div class="tooltip-month">${d.data.month}</div>
+                        <div class="tooltip-count">${total.toLocaleString()} total notices</div>
+                        <div class="tooltip-insight">${seasonalInsights[d.data.month]}</div>
+                    `);
+                })
+                .on("mouseleave",hideTip);
 
         svg.append("g").attr("class","axis").attr("transform",`translate(0,${H})`).call(d3.axisBottom(x).tickSizeOuter(0));
         svg.append("g").attr("class","axis").call(d3.axisLeft(y).ticks(6).tickFormat(d=>d.toLocaleString()));
-        svg.append("text").attr("transform","rotate(-90)").attr("y",-52).attr("x",-(H/2)).attr("text-anchor","middle").attr("fill","#555").style("font-size","0.75rem").style("font-family","Georgia, serif").text("Total Eviction Notices Filed");
+        svg.append("text").attr("transform","rotate(-90)").attr("y",-52).attr("x",-(H/2))
+            .attr("text-anchor","middle").attr("fill","#555").style("font-size","0.75rem")
+            .style("font-family","Georgia, serif").text("Total Eviction Notices Filed");
 
         const swatchSize=11, colWidth=158;
         [causes.slice(0,4), causes.slice(4)].forEach((row,rowIdx) => {
-        const startX = (W-row.length*colWidth)/2;
-        row.forEach((cause,i) => {
-            const lx=startX+i*colWidth, ly=H+32+rowIdx*18;
-            svg.append("rect").attr("x",lx).attr("y",ly).attr("width",swatchSize).attr("height",swatchSize).attr("fill",colors[cause]);
-            svg.append("text").attr("class","legend-label").attr("x",lx+swatchSize+5).attr("y",ly+swatchSize-1).text(cause);
-        });
+            const startX = (W-row.length*colWidth)/2;
+            row.forEach((cause,i) => {
+                const lx=startX+i*colWidth, ly=H+32+rowIdx*18;
+                svg.append("rect").attr("x",lx).attr("y",ly).attr("width",swatchSize).attr("height",swatchSize).attr("fill",colors[cause]);
+                svg.append("text").attr("class","legend-label").attr("x",lx+swatchSize+5).attr("y",ly+swatchSize-1).text(cause);
+            });
         });
     });
 })();
-
-// Scroll-triggered fade-in for each chart section
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        }
-    });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll(".chart-section, .hero").forEach(section => {
-    observer.observe(section);
-});
 
 </script>
 </body>
