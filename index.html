@@ -10,16 +10,15 @@
 <body>
 
 <!-- HERO -->
-<!-- Feedback #4: Removed 01-04 objective cards to improve data-to-ink ratio -->
 <section class="hero">
-    <p class="hero-eyebrow">CS360 Data Visualization · Final Project</p>
-    <h1><em>Get Out!</em> A Data-Driven Narrative of<br>Housing Displacement in San Francisco</h1>
-    <p class="hero-byline">By Adrienne Dominique Sy Chu</p>
-    <div class="hero-divider"></div>
-    <p class="hero-intro">
+    <p class="hero-eyebrow fade-in">CS360 Data Visualization · Final Project</p>
+    <h1 class="fade-in"><em>Get Out!</em> A Data-Driven Narrative of<br>Housing Displacement in San Francisco</h1>
+    <p class="hero-byline fade-in">By Adrienne Dominique Sy Chu</p>
+    <div class="hero-divider fade-in"></div>
+    <p class="hero-intro fade-in">
         San Francisco has long struggled with a housing crisis that has forced thousands of residents out of their homes. Eviction notices tell the story of who is being displaced, where it is happening, and why — but raw data alone can be hard to understand. This project turns nearly three decades of eviction records from the SF Rent Board into a visual story that anyone can follow, making the numbers feel real and helping everyday people understand one of San Francisco's most pressing issues.
     </p>
-    <p class="hero-source">Data: SF Rent Arbitration Board via DataSF · Eviction Notices (1997–2025)</p>
+    <p class="hero-source fade-in">Data: SF Rent Arbitration Board via DataSF · Eviction Notices (1997–2025)</p>
 </section>
 
 <div class="section-divider"></div>
@@ -27,13 +26,12 @@
 <!-- CHART 1 — CHOROPLETH MAP -->
 <section class="chart-section">
     <div class="chart-wrapper">
-        <h2>Eviction Notices by SF Neighborhood (1997–2025)</h2>
-        <p class="subtitle">Choropleth map of geographic concentration of eviction notices across San Francisco's 41 neighborhoods</p>
-        <!-- Narrative trimmed to 3 sentences max per feedback -->
-        <p class="narrative">
+        <h2 class="fade-in">Eviction Notices by SF Neighborhood (1997–2025)</h2>
+        <p class="subtitle fade-in">Choropleth map of geographic concentration of eviction notices across San Francisco's 41 neighborhoods</p>
+        <p class="narrative fade-in">
             Housing displacement in San Francisco is deeply uneven, with historically high-density rental areas bearing a disproportionate share of eviction filings over the past three decades. The Mission District alone accounts for over 11% of all citywide notices filed since 1997. Use the year slider to trace how the geography of displacement has shifted in response to economic cycles, gentrification, and policy changes.
         </p>
-        <div class="map-layout">
+        <div class="map-layout fade-in">
             <div id="map-svg-container"></div>
             <div class="controls-panel">
                 <div>
@@ -69,15 +67,12 @@
 <!-- CHART 2 — HEATMAP -->
 <section class="chart-section">
     <div class="chart-wrapper">
-        <h2>Eviction Causes by SF Neighborhood (1997–2025)</h2>
-        <p class="subtitle">Heatmap of eviction cause concentrations across San Francisco's 20 highest-volume neighborhoods, sorted by total filings</p>
-        <!-- Narrative trimmed to 3 sentences max per feedback -->
-        <p class="narrative">
+        <h2 class="fade-in">Eviction Causes by SF Neighborhood (1997–2025)</h2>
+        <p class="subtitle fade-in">Heatmap of eviction cause concentrations across San Francisco's 20 highest-volume neighborhoods, sorted by total filings</p>
+        <p class="narrative fade-in">
             The causes driving eviction are not distributed evenly — each neighborhood carries a distinct displacement fingerprint shaped by its housing stock and demographics. Owner Move-In and Breach filings dominate high-density corridors like the Mission, while Nuisance evictions concentrate in areas with larger multi-unit buildings. These 20 neighborhoods account for over 80% of all citywide notices filed since 1997.
         </p>
-        <!-- Feedback #3: Note explaining which cells have tooltips -->
-        <p class="heatmap-note">★ Darker cells (top ~40% by volume per cause) are interactive — hover to reveal neighborhood context.</p>
-        <div id="chart-heatmap"></div>
+        <div id="chart-heatmap" class="fade-in"></div>
     </div>
 </section>
 
@@ -86,13 +81,12 @@
 <!-- CHART 3 — LINE CHART -->
 <section class="chart-section">
     <div class="chart-wrapper">
-        <h2>SF Eviction Notices Filed Per Year (1997–2025)</h2>
-        <p class="subtitle">Line chart of annual eviction filings reflecting the economic pressures shaping San Francisco's housing crisis</p>
-        <!-- Narrative trimmed to 3 sentences max per feedback -->
-        <p class="narrative">
+        <h2 class="fade-in">SF Eviction Notices Filed Per Year (1997–2025)</h2>
+        <p class="subtitle fade-in">Line chart of annual eviction filings reflecting the economic pressures shaping San Francisco's housing crisis</p>
+        <p class="narrative fade-in">
             Over nearly three decades, San Francisco's eviction filings have tracked closely with economic booms and crises — surging in the dot-com era, collapsing after 2001, and spiking again during the mid-2010s tech boom. The COVID-19 moratorium caused the sharpest single-year drop on record in 2020. Hover any data point or annotation to explore the historical context behind each shift.
         </p>
-        <div id="chart-linechart"></div>
+        <div id="chart-linechart" class="fade-in"></div>
     </div>
 </section>
 
@@ -101,29 +95,28 @@
 <!-- CHART 4 — STACKED BAR CHART -->
 <section class="chart-section">
     <div class="chart-wrapper">
-        <h2>Eviction Notices by Cause Across Each Month (All Years Combined)</h2>
-        <p class="subtitle">Stacked bar chart of eviction types by month, revealing seasonal patterns in San Francisco displacement</p>
-        <!-- Narrative trimmed to 3 sentences max per feedback -->
-        <p class="narrative">
+        <h2 class="fade-in">Eviction Notices by Cause Across Each Month (All Years Combined)</h2>
+        <p class="subtitle fade-in">Stacked bar chart of eviction types by month, revealing seasonal patterns in San Francisco displacement</p>
+        <p class="narrative fade-in">
             Eviction filings in San Francisco follow distinct seasonal rhythms tied to the rental market cycle. Owner Move-In notices peak in spring as landlords align displacement with summer lease turnover, while Breach and Nuisance filings climb in late summer and fall. Hover any bar to read a focused seasonal insight for that month.
         </p>
-        <div id="chart-barchart"></div>
+        <div id="chart-barchart" class="fade-in"></div>
     </div>
 </section>
 
 <div class="section-divider"></div>
 
-<!-- TECHNOLOGIES & SKILLS SECTION — mirrors hero style, cards like removed objectives -->
+<!-- TECHNOLOGIES & SKILLS SECTION -->
 <section class="tech-section">
-    <p class="tech-eyebrow">Tools & Methods</p>
-    <h2>Technologies & Skills Used</h2>
-    <div class="tech-divider"></div>
-    <p class="tech-intro fade-in-tech">
+    <p class="tech-eyebrow fade-in">Tools & Methods</p>
+    <h2 class="fade-in">Technologies & Skills Used</h2>
+    <div class="tech-divider fade-in"></div>
+    <p class="tech-intro fade-in">
         This project was built entirely from scratch using open web technologies and real civic data.
         Claude AI was used throughout — not just for code, but to help craft the narrative layer
         that connects raw statistics to the human stories behind each eviction notice.
     </p>
-    <div class="tech-cards fade-in-tech">
+    <div class="tech-cards fade-in">
         <div class="tech-card">
             <div class="tech-icon">📊</div>
             <div class="tech-name">D3.js</div>
@@ -164,381 +157,10 @@
 
 <div class="tooltip" id="shared-tooltip"></div>
 
-<script>
+<script src="main.js"></script>
+<script src="charts/chart1-map.js"></script>
+<script src="charts/chart2-heatmap.js"></script>
+<script src="charts/chart3-linechart.js"></script>
+<script src="charts/chart4-barchart.js"></script>
 
-// Scroll observer — chart sections, hero, and tech section inner elements
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add("visible");
-    });
-}, { threshold: 0.1 });
-
-document.querySelectorAll(".chart-section, .hero, .fade-in-tech").forEach(s => observer.observe(s));
-
-// Shared tooltip
-const tooltip = d3.select("#shared-tooltip");
-function showTip(event, html) {
-    tooltip.style("opacity", 1)
-        .style("left", (event.pageX + 14) + "px")
-        .style("top",  (event.pageY - 30) + "px")
-        .html(html);
-}
-function hideTip() { tooltip.style("opacity", 0); }
-
-
-// CHART 1 — CHOROPLETH MAP
-// Feedback #2: Updated to Spectral diverging palette (green=low, orange=high)
-(function() {
-    // Spectral 5-class from ColorBrewer: low evictions = green, high = orange/red
-    const colorRange = ["#abdda4", "#ffffbf", "#fdae61", "#f46d43", "#d53e4f"];
-    let selectedYear = null, yearlyMap = new Map(), allTotals = new Map(), geoFeatures = null;
-
-    const W_MAP = 600, H_MAP = 500;
-
-    const svg = d3.select("#map-svg-container")
-        .append("svg").attr("width", W_MAP).attr("height", H_MAP);
-    svg.append("rect").attr("width", W_MAP).attr("height", H_MAP).attr("fill", "#a8cfe0");
-
-    const mapG = svg.append("g");
-    const projection = d3.geoMercator();
-    const pathGen    = d3.geoPath().projection(projection);
-
-    const zoom = d3.zoom().scaleExtent([1,14]).on("zoom", event => {
-        mapG.attr("transform", event.transform);
-        mapG.selectAll(".neighborhood").attr("stroke-width", 0.8 / event.transform.k);
-    });
-    svg.call(zoom);
-    svg.on("dblclick.zoom", null);
-
-    function getCountsForYear(yr) { return yr === null ? allTotals : (yearlyMap.get(yr) || new Map()); }
-
-    function makeColorScale(counts) {
-        const maxVal = d3.max(Array.from(counts.values()).filter(v=>v>0)) || 1;
-        return d3.scaleSequential().domain([0, maxVal]).interpolator(d3.interpolateRgbBasis(colorRange));
-    }
-
-    // Feedback #1: Legend SVG width matches container so it's never cut off
-    function drawLegend(counts) {
-        const ls = d3.select("#legend-svg");
-        ls.selectAll("*").remove();
-        const defs = ls.append("defs");
-        const grad = defs.append("linearGradient").attr("id","map-legend-grad");
-        colorRange.forEach((c,i) =>
-            grad.append("stop").attr("offset",`${i/(colorRange.length-1)*100}%`).attr("stop-color",c));
-        ls.append("rect").attr("width",140).attr("height",16).attr("rx",2).style("fill","url(#map-legend-grad)");
-        const maxVal = d3.max(Array.from(counts.values()).filter(v=>v>0)) || 0;
-        d3.select("#legend-min").text("0");
-        d3.select("#legend-max").text(maxVal.toLocaleString());
-    }
-
-    function drawTop5(counts) {
-        const top5 = Array.from(counts.entries()).filter(([k])=>k).sort((a,b)=>b[1]-a[1]).slice(0,5);
-        const maxC = top5[0]?.[1] || 1;
-        const el = document.getElementById("top5-bars"); el.innerHTML = "";
-        top5.forEach(([name,count],i) => {
-            const pct = ((count/maxC)*100).toFixed(0);
-            const short = name.length>19 ? name.slice(0,17)+"…" : name;
-            const row = document.createElement("div"); row.className = "top5-row";
-            row.innerHTML = `<div class="top5-label">${i+1}. ${short}</div>
-                <div class="top5-bar-track"><div class="top5-bar-fill" style="width:${pct}%"></div></div>
-                <div class="top5-count">${count.toLocaleString()}</div>`;
-            el.appendChild(row);
-        });
-    }
-
-    function updateMap() {
-        if (!geoFeatures) return;
-        const counts = getCountsForYear(selectedYear);
-        drawLegend(counts); drawTop5(counts);
-        const scale = makeColorScale(counts);
-        const total = d3.sum(Array.from(counts.values()));
-        mapG.selectAll(".neighborhood").data(geoFeatures, d=>d.properties.nhood)
-            .join(enter => enter.append("path").attr("class","neighborhood").attr("d",pathGen)
-                .on("mousemove", (event,d) => {
-                    const name=d.properties.nhood, count=counts.get(name)||0;
-                    const pct = total>0?((count/total)*100).toFixed(1):"0.0";
-                    showTip(event,`<div class="tooltip-name">${name}</div>
-                        <div class="tooltip-count">${count.toLocaleString()} eviction notices</div>
-                        <div class="tooltip-pct">${pct}% of citywide total</div>`);
-                })
-                .on("mouseleave", hideTip),
-                update => update)
-            .transition().duration(300)
-            .attr("fill", d => scale(counts.get(d.properties.nhood)||0));
-    }
-
-    Promise.all([d3.csv("data/evictions_clean.csv"), d3.json("data/Analysis_Neighborhoods.geojson")])
-        .then(([raw, geo]) => {
-            const EXCLUDE = new Set(["Treasure Island"]);
-            const fitGeo = { type:"FeatureCollection", features: geo.features.filter(f=>!EXCLUDE.has(f.properties.nhood)) };
-            projection.fitExtent([[80,100],[W_MAP-50,H_MAP+5]], fitGeo);
-            const nested = d3.rollup(raw, v=>v.length, d=>+d.year, d=>d["Neighborhood - Analysis"]);
-            nested.forEach((nh,yr) => yearlyMap.set(yr,nh));
-            allTotals   = d3.rollup(raw, v=>v.length, d=>d["Neighborhood - Analysis"]);
-            geoFeatures = geo.features;
-            updateMap();
-        });
-
-    document.getElementById("year-slider").addEventListener("input", function() {
-        const idx = +this.value;
-        if (idx===0) { selectedYear=null; document.getElementById("year-display").textContent="All Years"; }
-        else { selectedYear=1996+idx; document.getElementById("year-display").textContent=selectedYear; }
-        updateMap();
-    });
-})();
-
-
-// CHART 2 — HEATMAP
-// Feedback #2: Updated to Spectral diverging palette
-// Feedback #3: Note added in HTML above chart
-(function() {
-    const TOP_CAUSES = ["Owner Move In","Breach","Nuisance","Non Payment","Ellis Act WithDrawal","Late Payments","Roommate Same Unit","Capital Improvement"];
-    // Spectral 5-class from ColorBrewer: low evictions = green, high = orange/red
-    const COLOR_RANGE = ["#abdda4", "#ffffbf", "#fdae61", "#f46d43", "#d53e4f"];
-    const STANDOUT = 0.6;
-
-    const narratives = {
-        "Sunset/Parkside|Owner Move In":          "Sunset/Parkside leads all neighborhoods in Owner Move-In evictions. Its large stock of single-family homes and two-unit buildings makes it especially vulnerable to landlords reclaiming units for personal occupancy.",
-        "Mission|Owner Move In":                  "The Mission's high Owner Move-In count reflects decades of gentrification pressure, as rising property values incentivized landlords to displace long-term tenants in favor of owner occupancy.",
-        "Outer Richmond|Owner Move In":           "Outer Richmond's predominantly residential character and owner-occupied building stock have made Owner Move-In one of its most common eviction tools.",
-        "Lakeshore|Breach":                       "Lakeshore's outsized Breach count is largely driven by a cluster of large apartment complexes, where lease violation filings have been filed at unusually high rates relative to the neighborhood's size.",
-        "Mission|Breach":                         "Breach-of-lease filings in the Mission reflect the neighborhood's dense rental market, where landlord-tenant disputes over lease terms have been a persistent feature of the eviction landscape.",
-        "Tenderloin|Breach":                      "The Tenderloin's high Breach count is tied to its concentration of single-room occupancy hotels and subsidized housing, where lease enforcement is frequently used as a displacement mechanism.",
-        "Tenderloin|Nuisance":                    "The Tenderloin records more Nuisance evictions than any other neighborhood — nearly double its nearest rival. Its density, transient population, and SRO-heavy housing stock make it the city's epicenter of nuisance-based displacement.",
-        "Mission|Nuisance":                       "The Mission's high Nuisance count reflects both the neighborhood's density and the use of nuisance filings as a tool during periods of intense gentrification pressure in the 2000s and 2010s.",
-        "Mission|Non Payment":                    "The Mission leads in Non-Payment evictions, reflecting the financial vulnerability of its historically lower-income, working-class tenant base to economic downturns and rent increases.",
-        "Bayview Hunters Point|Non Payment":      "Bayview Hunters Point's elevated Non-Payment rate reflects persistent income inequality and economic precarity in one of San Francisco's most disinvested neighborhoods.",
-        "Mission|Ellis Act WithDrawal":           "The Mission has seen more Ellis Act evictions than any other neighborhood, a pattern closely tied to investor speculation and the conversion of rental properties during the dot-com and tech boom eras.",
-        "Mission|Late Payments":                  "Late Payment filings in the Mission track closely with its Non-Payment numbers, reflecting the same pattern of economic stress among the neighborhood's rent-burdened tenant population.",
-        "Sunset/Parkside|Late Payments":          "Sunset/Parkside's Late Payments notices mirror its Owner Move-In profile — both reflect a landlord base more likely to pursue formal legal action over tenancy issues.",
-        "Mission|Roommate Same Unit":             "The Mission's density and culture of shared housing have produced the city's highest rate of Roommate Same Unit evictions, where landlords seek to remove unauthorized occupants or subtenants.",
-        "Castro/Upper Market|Roommate Same Unit": "Castro/Upper Market's high Roommate Same Unit count reflects its concentration of older multi-unit buildings where subletting and shared occupancy arrangements are common.",
-        "Mission|Capital Improvement":            "The Mission leads in Capital Improvement evictions, a pattern consistent with landlord-driven renovation strategies during the neighborhood's prolonged period of speculative investment.",
-    };
-
-    const margin = { top: 90, right: 150, bottom: 70, left: 180 };
-    const totalW = 1050, cellH = 22, nRows = 20;
-    const H = cellH * nRows, totalH = H + margin.top + margin.bottom;
-    const W = totalW - margin.left - margin.right;
-
-    const svg = d3.select("#chart-heatmap").append("svg")
-        .attr("width", totalW).attr("height", totalH)
-        .append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-
-    d3.csv("data/evictions_clean.csv").then(raw => {
-        const filtered = raw.filter(d => d["Neighborhood - Analysis"] && d.primary_cause);
-        const nTotals  = d3.rollup(filtered, v=>v.length, d=>d["Neighborhood - Analysis"]);
-        const top20    = Array.from(nTotals.entries()).sort((a,b)=>b[1]-a[1]).slice(0,20).map(([n])=>n);
-        const nested   = d3.rollup(
-            filtered.filter(d=>top20.includes(d["Neighborhood - Analysis"])),
-            v=>v.length, d=>d["Neighborhood - Analysis"], d=>d.primary_cause);
-
-        const cells = [];
-        top20.forEach(nhood => {
-            const cm = nested.get(nhood)||new Map();
-            TOP_CAUSES.forEach(cause => cells.push({ nhood, cause, count: cm.get(cause)||0 }));
-        });
-
-        const causeMax = new Map();
-        TOP_CAUSES.forEach(cause =>
-            causeMax.set(cause, d3.max(cells.filter(c=>c.cause===cause), c=>c.count)||1));
-
-        const norm = (cause, count) => count / causeMax.get(cause);
-        const cellColor = (cause, count) => d3.interpolateRgbBasis(COLOR_RANGE)(norm(cause,count));
-
-        const x = d3.scaleBand().domain(TOP_CAUSES).range([0,W]).padding(0.06);
-        const y = d3.scaleBand().domain(top20).range([0,H]).padding(0.06);
-
-        svg.selectAll(".cell").data(cells).enter().append("rect")
-            .attr("class", d => (norm(d.cause,d.count)>=STANDOUT && narratives[`${d.nhood}|${d.cause}`])
-                ? "cell cell-standout" : "cell")
-            .attr("x", d=>x(d.cause)).attr("y", d=>y(d.nhood))
-            .attr("width", x.bandwidth()).attr("height", y.bandwidth())
-            .attr("rx", 2).attr("fill", d=>cellColor(d.cause,d.count))
-            .on("mousemove", (event,d) => {
-                const text = narratives[`${d.nhood}|${d.cause}`];
-                if (!text) return;
-                showTip(event,`<div class="tooltip-header">${d.nhood} — ${d.cause}</div><div class="tooltip-insight">${text}</div>`);
-            })
-            .on("mouseleave", hideTip);
-
-        svg.append("g").attr("class","axis").call(d3.axisTop(x).tickSize(0))
-            .selectAll("text")
-                .style("font-size","0.70rem").style("font-family","Georgia, serif").style("fill","#444")
-                .attr("text-anchor","start").attr("dx","0.3em").attr("dy","-0.4em")
-                .attr("transform","rotate(-40)");
-
-        svg.append("g").attr("class","axis").call(d3.axisLeft(y).tickSize(0))
-            .selectAll("text").style("font-size","0.72rem").style("font-family","Georgia, serif")
-            .style("fill","#444").attr("dx","-0.4em");
-
-        // Feedback #1: Legend spans full grid width, never cut off
-        const legendW = W, legendH = 11, legendX = 0, legendY = H + 26;
-        const lgDefs = svg.append("defs");
-        const grad   = lgDefs.append("linearGradient").attr("id","hm-grad");
-        COLOR_RANGE.forEach((c,i) =>
-            grad.append("stop").attr("offset",`${i/(COLOR_RANGE.length-1)*100}%`).attr("stop-color",c));
-        svg.append("rect").attr("x",legendX).attr("y",legendY)
-            .attr("width",legendW).attr("height",legendH).attr("rx",2)
-            .style("fill","url(#hm-grad)").style("outline","1px solid #bbb");
-        svg.append("text").attr("x",legendX).attr("y",legendY+legendH+14)
-            .attr("text-anchor","start").style("font-size","0.68rem").style("fill","#888")
-            .style("font-family","Georgia, serif").text("Fewer notices (green)");
-        svg.append("text").attr("x",legendX+legendW).attr("y",legendY+legendH+14)
-            .attr("text-anchor","end").style("font-size","0.68rem").style("fill","#888")
-            .style("font-family","Georgia, serif").text("More notices (orange)");
-    });
-})();
-
-
-// CHART 3 — LINE CHART
-(function() {
-    const annotations = [
-        { year:1998, title:"Dot-com boom peak:",    body:"evictions surge",            context:"The late-1990s tech boom drove rapid rent increases and owner move-in evictions as landlords sought higher-paying tenants. Filings peaked near 3,000 annually.", lx:8,   ly:-62,  anchor:"start" },
-        { year:2001, title:"Dot-com bust:",          body:"rapid decline",              context:"The collapse of the dot-com bubble triggered mass layoffs across the Bay Area tech sector, cooling the rental market and sharply reducing eviction pressure.",   lx:20,  ly:-62,  anchor:"start" },
-        { year:2009, title:"2008 Financial Crisis:", body:"filings hit decade low",     context:"The national mortgage crisis reduced investor activity in SF's rental market. Foreclosures and economic uncertainty suppressed eviction filings to their lowest point in over a decade.", lx:-15, ly:-80,  anchor:"start" },
-        { year:2016, title:"Tech boom 2.0:",         body:"evictions near 1990s highs", context:"A second wave of tech industry growth reignited gentrification pressure, pushing Ellis Act and owner move-in evictions back toward 1990s levels.",               lx:0,   ly:-80,  anchor:"start" },
-        { year:2020, title:"COVID-19 moratorium:",   body:"sharp drop in filings",      context:"California's eviction moratorium, enacted in March 2020, effectively halted most residential evictions statewide. Filings dropped by over 60% in a single year.", lx:-15, ly:-120, anchor:"start" },
-        { year:2023, title:"Post-pandemic stall:",   body:"filings remain suppressed",  context:"Despite the expiration of moratorium protections, filings have not returned to pre-pandemic levels. Ongoing tenant protections and landlord uncertainty have kept numbers unusually low.", lx:-50, ly:-80,  anchor:"start" },
-    ];
-
-    const margin = { top:20, right:30, bottom:45, left:58 };
-    const totalW=820, totalH=430;
-    const W = totalW-margin.left-margin.right, H = totalH-margin.top-margin.bottom;
-
-    const svg = d3.select("#chart-linechart").append("svg")
-        .attr("width",totalW).attr("height",totalH)
-        .append("g").attr("transform",`translate(${margin.left},${margin.top})`);
-
-    d3.csv("data/evictions_clean.csv").then(raw => {
-        const counts = d3.rollup(raw, v=>v.length, d=>+d.year);
-        const data   = Array.from(counts, ([year,count])=>({year,count}))
-            .filter(d=>d.year>=1997&&d.year<=2025).sort((a,b)=>a.year-b.year);
-
-        const x = d3.scaleLinear().domain([1997,2025]).range([0,W]);
-        const y = d3.scaleLinear().domain([0, d3.max(data,d=>d.count)*1.38]).range([H,0]);
-
-        svg.append("g").attr("class","grid").call(d3.axisLeft(y).tickSize(-W).tickFormat("").ticks(6));
-        svg.append("path").datum(data).attr("class","area-fill")
-            .attr("d", d3.area().x(d=>x(d.year)).y0(H).y1(d=>y(d.count)).curve(d3.curveMonotoneX));
-        svg.append("path").datum(data).attr("class","main-line")
-            .attr("d", d3.line().x(d=>x(d.year)).y(d=>y(d.count)).curve(d3.curveMonotoneX));
-
-        svg.selectAll(".data-dot").data(data).enter().append("circle")
-            .attr("class","data-dot").attr("cx",d=>x(d.year)).attr("cy",d=>y(d.count)).attr("r",3)
-            .on("mousemove", (event,d) => {
-                const ann = annotations.find(a=>a.year===d.year);
-                showTip(event,`<div class="tooltip-year">${d.year}</div>
-                    <div class="tooltip-count">${d.count.toLocaleString()} eviction notices</div>
-                    ${ann?`<div class="tooltip-context">${ann.context}</div>`:""}`);
-            })
-            .on("mouseleave", hideTip);
-
-        svg.append("g").attr("class","axis").attr("transform",`translate(0,${H})`)
-            .call(d3.axisBottom(x).tickFormat(d3.format("d")).ticks(15));
-        svg.append("g").attr("class","axis").call(d3.axisLeft(y).ticks(6).tickFormat(d=>d.toLocaleString()));
-        svg.append("text").attr("transform","rotate(-90)").attr("y",-50).attr("x",-(H/2))
-            .attr("text-anchor","middle").attr("fill","#555").style("font-size","0.75rem")
-            .style("font-family","Georgia, serif").text("Eviction Notices Filed");
-
-        annotations.forEach(ann => {
-            const pt = data.find(d=>d.year===ann.year); if(!pt) return;
-            const cx=x(pt.year), cy=y(pt.count), labelX=cx+ann.lx, labelY=cy+ann.ly, tipY=ann.ly<0?labelY+28:labelY;
-            svg.append("line").attr("class","ann-line").attr("x1",cx).attr("y1",cy).attr("x2",labelX).attr("y2",tipY);
-            svg.append("circle").attr("class","ann-dot").attr("cx",cx).attr("cy",cy).attr("r",5)
-                .on("mousemove", event => showTip(event,`<div class="tooltip-year">${ann.title.replace(":","")}</div><div class="tooltip-count">${pt.count.toLocaleString()} eviction notices</div><div class="tooltip-context">${ann.context}</div>`))
-                .on("mouseleave", hideTip);
-            svg.append("text").attr("class","ann-title").attr("x",labelX).attr("y",labelY).attr("text-anchor",ann.anchor).text(ann.title);
-            svg.append("text").attr("class","ann-body").attr("x",labelX).attr("y",labelY+14).attr("text-anchor",ann.anchor).text(ann.body);
-        });
-    });
-})();
-
-
-// CHART 4 — STACKED BAR CHART
-// Feedback #1: Tooltip now includes total count for the month
-(function() {
-    const MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    const TOP_CAUSES  = ["Owner Move In","Breach","Nuisance","Ellis Act WithDrawal","Non Payment","Capital Improvement"];
-    const colors = {
-        "Owner Move In":"#a6cee3","Breach":"#1f78b4","Nuisance":"#b2df8a",
-        "Ellis Act WithDrawal":"#33a02c","Non Payment":"#fb9a99","Capital Improvement":"#e31a1c","Other":"#fdbf6f"
-    };
-    const causes = [...TOP_CAUSES,"Other"];
-
-    const seasonalInsights = {
-        "Jan":"Post-holiday financial strain begins to surface, with Non-Payment notices running higher than the annual average as renters recover from December expenses.",
-        "Feb":"Ellis Act filings tick upward in February, often reflecting early-year landlord decisions to remove units from the rental market ahead of spring.",
-        "Mar":"Owner Move-In filings begin climbing as landlords position units ahead of the spring and summer lease cycle — displacement pressure starts building.",
-        "Apr":"April is the peak month for Owner Move-In evictions, with landlords timing displacement to align with lease expirations and the high-demand summer re-letting window.",
-        "May":"The spring Owner Move-In surge continues through May, one of the highest-volume months for total eviction filings across all years combined.",
-        "Jun":"June records the highest share of Owner Move-In evictions of any month, coinciding with academic year endings and the peak of annual tenant turnover.",
-        "Jul":"Owner Move-In filings ease as the summer lease window closes, but Breach notices begin their late-summer climb as occupancy disputes increase.",
-        "Aug":"Breach-of-lease filings reach their highest share of any month in August, suggesting landlords respond more aggressively to summer-period occupancy violations.",
-        "Sep":"Non-Payment filings rise in September as post-summer financial strain sets in, while Breach notices remain elevated heading into the fall.",
-        "Oct":"October is the most legally contested month of the fall — Breach and Nuisance filings both peak, reflecting end-of-year friction between landlords and tenants.",
-        "Nov":"Nuisance evictions reach their highest share of any month in November, even as total filings dip ahead of the holiday season.",
-        "Dec":"December sees the lowest overall filing volume but Non-Payment notices return to their highest share of the year, reflecting holiday-period financial hardship.",
-    };
-
-    const margin = { top:20, right:30, bottom:60, left:62 };
-    const totalW=820, totalH=440;
-    const W = totalW-margin.left-margin.right, H = totalH-margin.top-margin.bottom;
-
-    const svg = d3.select("#chart-barchart").append("svg")
-        .attr("width",totalW).attr("height",totalH)
-        .append("g").attr("transform",`translate(${margin.left},${margin.top})`);
-
-    d3.csv("data/evictions_clean.csv").then(raw => {
-        const monthData = MONTH_NAMES.map((name,idx) => {
-            const rows = raw.filter(d=>+d.month===idx+1);
-            const entry = { month: name, _total: rows.length };
-            TOP_CAUSES.forEach(c => { entry[c] = d3.sum(rows, d=>d[c]==="True"||d[c]==="true"?1:0); });
-            const topSet = new Set(TOP_CAUSES);
-            entry["Other"] = rows.filter(d=>!topSet.has(d.primary_cause)).length;
-            return entry;
-        });
-
-        const series = d3.stack().keys(causes)(monthData);
-        const x = d3.scaleBand().domain(MONTH_NAMES).range([0,W]).padding(0.25);
-        const y = d3.scaleLinear().domain([0, d3.max(series[series.length-1], d=>d[1])*1.08]).range([H,0]);
-
-        svg.append("g").attr("class","grid").call(d3.axisLeft(y).tickSize(-W).tickFormat("").ticks(6));
-
-        svg.selectAll(".cause-group").data(series).enter().append("g").attr("fill",d=>colors[d.key])
-            .selectAll("rect").data(d=>d.map(pt=>({...pt,cause:d.key}))).enter().append("rect")
-                .attr("class","bar-segment")
-                .attr("x",d=>x(d.data.month)).attr("y",d=>y(d[1]))
-                .attr("height",d=>Math.max(0,y(d[0])-y(d[1]))).attr("width",x.bandwidth())
-                .on("mousemove",(event,d) => {
-                    // Feedback #1: Added total count to bar chart tooltip
-                    const total = d.data._total;
-                    showTip(event,`
-                        <div class="tooltip-month">${d.data.month}</div>
-                        <div class="tooltip-count">${total.toLocaleString()} total notices</div>
-                        <div class="tooltip-insight">${seasonalInsights[d.data.month]}</div>
-                    `);
-                })
-                .on("mouseleave",hideTip);
-
-        svg.append("g").attr("class","axis").attr("transform",`translate(0,${H})`).call(d3.axisBottom(x).tickSizeOuter(0));
-        svg.append("g").attr("class","axis").call(d3.axisLeft(y).ticks(6).tickFormat(d=>d.toLocaleString()));
-        svg.append("text").attr("transform","rotate(-90)").attr("y",-52).attr("x",-(H/2))
-            .attr("text-anchor","middle").attr("fill","#555").style("font-size","0.75rem")
-            .style("font-family","Georgia, serif").text("Total Eviction Notices Filed");
-
-        const swatchSize=11, colWidth=158;
-        [causes.slice(0,4), causes.slice(4)].forEach((row,rowIdx) => {
-            const startX = (W-row.length*colWidth)/2;
-            row.forEach((cause,i) => {
-                const lx=startX+i*colWidth, ly=H+32+rowIdx*18;
-                svg.append("rect").attr("x",lx).attr("y",ly).attr("width",swatchSize).attr("height",swatchSize).attr("fill",colors[cause]);
-                svg.append("text").attr("class","legend-label").attr("x",lx+swatchSize+5).attr("y",ly+swatchSize-1).text(cause);
-            });
-        });
-    });
-})();
-
-</script>
-</body>
 </html>

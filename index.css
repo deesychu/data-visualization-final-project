@@ -14,27 +14,6 @@ body {
     text-align: center;
 }
 
-.hero-eyebrow,
-.hero h1,
-.hero-byline,
-.hero-divider,
-.hero-intro,
-.hero-source {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.hero.visible .hero-eyebrow,
-.hero.visible h1,
-.hero.visible .hero-byline,
-.hero.visible .hero-divider,
-.hero.visible .hero-intro,
-.hero.visible .hero-source {
-    opacity: 1;
-    transform: translateY(0);
-}
-
 .hero-eyebrow {
     font-size: 0.82rem;
     letter-spacing: 0.12em;
@@ -98,14 +77,6 @@ body {
     display: flex;
     justify-content: center;
     padding: 56px 20px 48px;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-}
-
-.chart-section.visible {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .chart-section:nth-child(even) {
@@ -214,7 +185,7 @@ body {
     margin-top: 2px;
 }
 
-/* ── Chart 1: Choropleth ──────────────────────────────────────────────── */
+/* Chart 1: Choropleth */
 .map-layout {
     display: flex;
     gap: 28px;
@@ -356,7 +327,7 @@ input[type="range"] {
     opacity: 0.85;
 }
 
-/* ── Chart 2: Heatmap ─────────────────────────────────────────────────── */
+/* Chart 2: Heatmap */
 #chart-heatmap {
     display: flex;
     justify-content: center;
@@ -371,7 +342,7 @@ input[type="range"] {
     stroke-width: 1.5px;
 }
 
-/* ── Chart 3: Line chart ──────────────────────────────────────────────── */
+/* Chart 3: Line chart */
 .area-fill { fill: #3a7d44; opacity: 0.15; }
 
 .main-line {
@@ -407,7 +378,7 @@ input[type="range"] {
     font-family: Georgia, serif;
 }
 
-/* ── Chart 4: Stacked bar ─────────────────────────────────────────────── */
+/* Chart 4: Stacked bar */
 .bar-segment {
     cursor: pointer;
     transition: opacity 0.15s;
@@ -421,7 +392,7 @@ input[type="range"] {
     font-family: Georgia, serif;
 }
 
-/* ── Shared SVG axis / grid ───────────────────────────────────────────── */
+/* Shared SVG axis / grid */
 .axis text {
     fill: #555;
     font-size: 0.75rem;
@@ -439,7 +410,7 @@ input[type="range"] {
 
 .grid path { stroke-width: 0; }
 
-/* ── Technologies & Skills section — mirrors hero style ───────────────── */
+/* Technologies & Skills */
 .tech-section {
     background-color: #1e321e;
     color: #fff;
@@ -448,20 +419,24 @@ input[type="range"] {
     /* background is static — no fade on the section itself */
 }
 
-/* Inner elements fade in on scroll independently */
-.fade-in-tech {
+.fade-in {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(32px);
     transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
-.fade-in-tech.visible {
+.fade-in.visible {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* Stagger cards slightly after intro */
-.tech-cards.fade-in-tech { transition-delay: 0.15s; }
+.subtitle.fade-in    { transition-delay: 0.1s; }
+.narrative.fade-in   { transition-delay: 0.2s; }
+.map-layout.fade-in,
+#chart-heatmap.fade-in,
+#chart-linechart.fade-in,
+#chart-barchart.fade-in { transition-delay: 0.3s; }
+.tech-cards.fade-in  { transition-delay: 0.2s; }
 
 .tech-eyebrow {
     font-size: 0.82rem;
@@ -494,7 +469,7 @@ input[type="range"] {
     color: #c8e6c4;
 }
 
-/* Tech cards — same pattern as removed objective cards */
+/* Tech cards */
 .tech-cards {
     display: flex;
     justify-content: center;
@@ -537,7 +512,7 @@ input[type="range"] {
     line-height: 1.5;
 }
 
-/* ── Footer ───────────────────────────────────────────────────────────── */
+/* Footer */
 .site-footer {
     background-color: #2d4a2d;
     color: #a8d5a2;
