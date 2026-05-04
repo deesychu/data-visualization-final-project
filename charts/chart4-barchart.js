@@ -23,7 +23,7 @@
         "Dec":"December sees the lowest overall filing volume but Non-Payment notices return to their highest share of the year, reflecting holiday-period financial hardship.",
     };
 
-    const margin = { top:20, right:30, bottom:60, left:62 };
+    const margin = { top:20, right:30, bottom:80, left:62 };
     const totalW=820, totalH=440;
     const W = totalW-margin.left-margin.right, H = totalH-margin.top-margin.bottom;
 
@@ -53,7 +53,6 @@
                 .attr("x",d=>x(d.data.month)).attr("y",d=>y(d[1]))
                 .attr("height",d=>Math.max(0,y(d[0])-y(d[1]))).attr("width",x.bandwidth())
                 .on("mousemove",(event,d) => {
-                    // Feedback #1: Added total count to bar chart tooltip
                     const total = d.data._total;
                     showTip(event,`
                         <div class="tooltip-month">${d.data.month}</div>

@@ -1,8 +1,18 @@
 // CHART 2 — HEATMAP
 (function() {
     const TOP_CAUSES = ["Owner Move In","Breach","Nuisance","Non Payment","Ellis Act WithDrawal","Late Payments","Roommate Same Unit","Capital Improvement"];
-    // Spectral 5-class from ColorBrewer: low evictions = green, high = orange/red
-    const COLOR_RANGE = ["#abdda4", "#ffffbf", "#fdae61", "#f46d43", "#d53e4f"];
+
+    // ColorBrewer RdYlGn 5-class diverging palette — matches choropleth
+    // Source: https://colorbrewer2.org/#type=diverging&scheme=RdYlGn&n=5
+    // Low count → green, high count → red (normalized per cause column)
+    const COLOR_RANGE = [
+        "rgb(26,150,65)",   // dark green  — lowest relative count
+        "rgb(166,217,106)", // light green
+        "rgb(255,255,191)", // pale yellow — midpoint
+        "rgb(253,174,97)",  // orange
+        "rgb(215,25,28)"    // red         — highest relative count
+    ];
+
     const STANDOUT = 0.6;
 
     const narratives = {
@@ -52,7 +62,7 @@
             causeMax.set(cause, d3.max(cells.filter(c=>c.cause===cause), c=>c.count)||1));
 
         const norm = (cause, count) => count / causeMax.get(cause);
-        const cellColor = (cause, count) => d3.interpolateRgbBasis(COLOR_RANGE)(norm(cause,count));
+        const cellColor = (cause, count) => d3.interpolateRgbBasis(COLOR_RANGE)(norm(cause, count));
 
         const x = d3.scaleBand().domain(TOP_CAUSES).range([0,W]).padding(0.06);
         const y = d3.scaleBand().domain(top20).range([0,H]).padding(0.06);
@@ -80,8 +90,8 @@
             .selectAll("text").style("font-size","0.72rem").style("font-family","Georgia, serif")
             .style("fill","#444").attr("dx","-0.4em");
 
-        // Feedback #1: Legend spans full grid width, never cut off
-        const legendW = W, legendH = 11, legendX = 0, legendY = H + 26;
+        // Legend centered, fixed width (not full grid)
+        const legendW = 250, legendH = 11, legendX = (W - 250) / 2, legendY = H + 26;
         const lgDefs = svg.append("defs");
         const grad   = lgDefs.append("linearGradient").attr("id","hm-grad");
         COLOR_RANGE.forEach((c,i) =>
@@ -94,6 +104,6 @@
             .style("font-family","Georgia, serif").text("Fewer notices (green)");
         svg.append("text").attr("x",legendX+legendW).attr("y",legendY+legendH+14)
             .attr("text-anchor","end").style("font-size","0.68rem").style("fill","#888")
-            .style("font-family","Georgia, serif").text("More notices (orange)");
+            .style("font-family","Georgia, serif").text("More notices (red)");
     });
 })();
