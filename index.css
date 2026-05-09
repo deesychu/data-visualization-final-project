@@ -185,12 +185,49 @@ body {
     margin-top: 2px;
 }
 
-/* Chart 1: Choropleth */
+/* ── Chart 1: Choropleth ──────────────────────────────────────────────── */
 .map-layout {
     display: flex;
     gap: 28px;
     align-items: flex-start;
     justify-content: center;
+}
+
+/* Mobile: stack map above controls, both full width */
+@media (max-width: 680px) {
+    .map-layout {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    #map-svg-container {
+        width: 100%;
+        max-width: 100% !important;
+    }
+
+    #map-svg-container svg {
+        width: 100%;
+        height: auto;
+    }
+
+    .controls-panel {
+        flex: none;
+        width: 100%;
+        max-width: 400px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 16px;
+        justify-content: center;
+    }
+
+    input[type="range"] {
+        width: 160px;
+    }
+
+    .slider-endpoints {
+        width: 160px;
+    }
 }
 
 #map-svg-container {
@@ -216,7 +253,7 @@ body {
 }
 
 .legend-title {
-    font-size: 0.78rem;
+    font-size: 0.92rem;
     font-weight: bold;
     color: #2d4a2d;
     margin-bottom: 6px;
@@ -237,14 +274,14 @@ body {
 .slider-section { display: flex; flex-direction: column; gap: 6px; }
 
 .slider-label {
-    font-size: 0.78rem;
+    font-size: 0.92rem;
     font-weight: bold;
     color: #2d4a2d;
     font-family: Georgia, serif;
 }
 
 .year-display {
-    font-size: 1.05rem;
+    font-size: 1.25rem;
     color: #2d4a2d;
     font-family: Georgia, serif;
     font-weight: bold;
@@ -260,21 +297,21 @@ input[type="range"] {
 .slider-endpoints {
     display: flex;
     justify-content: space-between;
-    font-size: 0.68rem;
+    font-size: 0.78rem;
     color: #888;
     font-family: Georgia, serif;
     width: 140px;
 }
 
 .zoom-hint {
-    font-size: 0.70rem;
+    font-size: 0.82rem;
     color: #999;
     font-family: Georgia, serif;
     font-style: italic;
 }
 
 .top5-title {
-    font-size: 0.78rem;
+    font-size: 0.92rem;
     font-weight: bold;
     color: #2d4a2d;
     font-family: Georgia, serif;
@@ -284,7 +321,7 @@ input[type="range"] {
 .top5-row { margin-bottom: 7px; }
 
 .top5-label {
-    font-size: 0.65rem;
+    font-size: 0.78rem;
     color: #444;
     font-family: Georgia, serif;
     white-space: nowrap;
@@ -295,21 +332,21 @@ input[type="range"] {
 }
 
 .top5-bar-track {
-    height: 7px;
+    height: 8px;
     background: #d6e8d6;
     border-radius: 3px;
     width: 140px;
 }
 
 .top5-bar-fill {
-    height: 7px;
+    height: 8px;
     border-radius: 3px;
     background: #3a7d44;
     transition: width 0.35s ease;
 }
 
 .top5-count {
-    font-size: 0.62rem;
+    font-size: 0.74rem;
     color: #888;
     font-family: Georgia, serif;
     margin-top: 1px;
@@ -327,7 +364,7 @@ input[type="range"] {
     opacity: 0.85;
 }
 
-/* Chart 2: Heatmap */
+/* ── Chart 2: Heatmap ─────────────────────────────────────────────────── */
 #chart-heatmap {
     display: flex;
     justify-content: center;
@@ -342,7 +379,7 @@ input[type="range"] {
     stroke-width: 1.5px;
 }
 
-/* Chart 3: Line chart */
+/* ── Chart 3: Line chart ──────────────────────────────────────────────── */
 .area-fill { fill: #3a7d44; opacity: 0.15; }
 
 .main-line {
@@ -378,7 +415,7 @@ input[type="range"] {
     font-family: Georgia, serif;
 }
 
-/* Chart 4: Stacked bar */
+/* ── Chart 4: Stacked bar ─────────────────────────────────────────────── */
 .bar-segment {
     cursor: pointer;
     transition: opacity 0.15s;
@@ -392,7 +429,7 @@ input[type="range"] {
     font-family: Georgia, serif;
 }
 
-/* Shared SVG axis / grid */
+/* ── Shared SVG axis / grid ───────────────────────────────────────────── */
 .axis text {
     fill: #555;
     font-size: 0.75rem;
@@ -410,7 +447,7 @@ input[type="range"] {
 
 .grid path { stroke-width: 0; }
 
-/* Technologies & Skills */
+/* ── Technologies & Skills section — mirrors hero style ───────────────── */
 .tech-section {
     background-color: #1e321e;
     color: #fff;
@@ -419,9 +456,10 @@ input[type="range"] {
     /* background is static — no fade on the section itself */
 }
 
+/* Inner elements fade in on scroll independently */
 .fade-in {
     opacity: 0;
-    transform: translateY(32px);
+    transform: translateY(24px);
     transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
@@ -430,13 +468,8 @@ input[type="range"] {
     transform: translateY(0);
 }
 
-.subtitle.fade-in    { transition-delay: 0.1s; }
-.narrative.fade-in   { transition-delay: 0.2s; }
-.map-layout.fade-in,
-#chart-heatmap.fade-in,
-#chart-linechart.fade-in,
-#chart-barchart.fade-in { transition-delay: 0.3s; }
-.tech-cards.fade-in  { transition-delay: 0.2s; }
+/* Stagger: cards fade in slightly after the intro text above them */
+.tech-cards.fade-in { transition-delay: 0.15s; }
 
 .tech-eyebrow {
     font-size: 0.82rem;
@@ -469,7 +502,7 @@ input[type="range"] {
     color: #c8e6c4;
 }
 
-/* Tech cards */
+/* Tech cards — same pattern as removed objective cards */
 .tech-cards {
     display: flex;
     justify-content: center;
@@ -512,7 +545,7 @@ input[type="range"] {
     line-height: 1.5;
 }
 
-/* Footer */
+/* ── Footer ───────────────────────────────────────────────────────────── */
 .site-footer {
     background-color: #2d4a2d;
     color: #a8d5a2;
