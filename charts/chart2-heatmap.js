@@ -1,16 +1,18 @@
 // CHART 2 — HEATMAP
-(function() {
-    const TOP_CAUSES = ["Owner Move In","Breach","Nuisance","Non Payment","Ellis Act WithDrawal","Late Payments","Roommate Same Unit","Capital Improvement"];
+(function () {
+    const TOP_CAUSES = [
+        "Owner Move In", "Breach", "Nuisance", "Non Payment",
+        "Ellis Act WithDrawal", "Late Payments", "Roommate Same Unit", "Capital Improvement"
+    ];
 
-    // ColorBrewer RdYlGn 5-class diverging palette — matches choropleth
-    // Source: https://colorbrewer2.org/#type=diverging&scheme=RdYlGn&n=5
+    // ColorBrewer RdYlGn 5-class diverging — matches choropleth
     // Low count → green, high count → red (normalized per cause column)
     const COLOR_RANGE = [
-        "rgb(26,150,65)",   // dark green  — lowest relative count
-        "rgb(166,217,106)", // light green
-        "rgb(255,255,191)", // pale yellow — midpoint
-        "rgb(253,174,97)",  // orange
-        "rgb(215,25,28)"    // red         — highest relative count
+        "rgb(26,150,65)",    // dark green  — lowest relative count
+        "rgb(166,217,106)",  // light green
+        "rgb(255,255,191)",  // pale yellow — midpoint
+        "rgb(253,174,97)",   // orange
+        "rgb(215,25,28)"     // red         — highest relative count
     ];
 
     const STANDOUT = 0.6;
@@ -34,76 +36,129 @@
         "Mission|Capital Improvement":            "The Mission leads in Capital Improvement evictions, a pattern consistent with landlord-driven renovation strategies during the neighborhood's prolonged period of speculative investment.",
     };
 
-    const margin = { top: 90, right: 150, bottom: 70, left: 180 };
-    const totalW = 1050, cellH = 22, nRows = 20;
-    const H = cellH * nRows, totalH = H + margin.top + margin.bottom;
-    const W = totalW - margin.left - margin.right;
+    // Dimensions
+    const TOTAL_W = 1050;
+    const margin  = { top: 90, right: 150, bottom: 70, left: 180 };
+    const cellH   = 22;
+    const nRows   = 20;
+    const H       = cellH * nRows;
+    const totalH  = H + margin.top + margin.bottom;
+    const W       = TOTAL_W - margin.left - margin.right;
 
-    const svg = d3.select("#chart-heatmap").append("svg")
-        .attr("width", totalW).attr("height", totalH)
-        .append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+    // Build chart
+    function buildChart(cells, top20, causeMax) {
+        const container = d3.select("#chart-heatmap");
+        container.selectAll("*").remove();
 
+        const svg = container.append("svg")
+            .attr("width",  TOTAL_W)
+            .attr("height", totalH)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        const norm      = (cause, count) => count / causeMax.get(cause);
+        const cellColor = (cause, count) => d3.interpolateRgbBasis(COLOR_RANGE)(norm(cause, count));
+
+        const x = d3.scaleBand().domain(TOP_CAUSES).range([0, W]).padding(0.06);
+        const y = d3.scaleBand().domain(top20).range([0, H]).padding(0.06);
+
+        // Cells
+        svg.selectAll(".cell").data(cells).enter().append("rect")
+            .attr("class", d =>
+                (norm(d.cause, d.count) >= STANDOUT && narratives[`${d.nhood}|${d.cause}`])
+                    ? "cell cell-standout" : "cell")
+            .attr("x",      d => x(d.cause))
+            .attr("y",      d => y(d.nhood))
+            .attr("width",  x.bandwidth())
+            .attr("height", y.bandwidth())
+            .attr("rx", 2)
+            .attr("fill", d => cellColor(d.cause, d.count))
+            .on("mousemove", (event, d) => {
+                const text = narratives[`${d.nhood}|${d.cause}`];
+                if (!text) return;
+                showTip(event, `
+                    <div class="tooltip-header">${d.nhood} — ${d.cause}</div>
+                    <div class="tooltip-insight">${text}</div>`);
+            })
+            .on("mouseleave", hideTip);
+
+        // X axis (cause labels, diagonal)
+        svg.append("g").attr("class", "axis").call(d3.axisTop(x).tickSize(0))
+            .selectAll("text")
+                .style("font-size",   "0.70rem")
+                .style("font-family", "Georgia, serif")
+                .style("fill",        "#444")
+                .attr("text-anchor", "start")
+                .attr("dx",  "0.3em")
+                .attr("dy",  "-0.4em")
+                .attr("transform", "rotate(-40)");
+
+        // Y axis (neighborhood labels)
+        svg.append("g").attr("class", "axis").call(d3.axisLeft(y).tickSize(0))
+            .selectAll("text")
+                .style("font-size",   "0.72rem")
+                .style("font-family", "Georgia, serif")
+                .style("fill",        "#444")
+                .attr("dx", "-0.4em");
+
+        // Legend
+        const legendW = Math.min(250, W * 0.6);
+        const legendH = 11;
+        const legendX = (W - legendW) / 2;
+        const legendY = H + 26;
+
+        const lgDefs = svg.append("defs");
+        const grad   = lgDefs.append("linearGradient").attr("id", "hm-grad");
+        COLOR_RANGE.forEach((c, i) =>
+            grad.append("stop")
+                .attr("offset",     `${i / (COLOR_RANGE.length - 1) * 100}%`)
+                .attr("stop-color", c));
+
+        svg.append("rect")
+            .attr("x", legendX).attr("y", legendY)
+            .attr("width", legendW).attr("height", legendH)
+            .attr("rx", 2)
+            .style("fill",    "url(#hm-grad)")
+            .style("outline", "1px solid #bbb");
+
+        svg.append("text")
+            .attr("x", legendX).attr("y", legendY + legendH + 14)
+            .attr("text-anchor", "start")
+            .style("font-size", "0.68rem").style("fill", "#888")
+            .style("font-family", "Georgia, serif")
+            .text("Fewer notices (green)");
+
+        svg.append("text")
+            .attr("x", legendX + legendW).attr("y", legendY + legendH + 14)
+            .attr("text-anchor", "end")
+            .style("font-size", "0.68rem").style("fill", "#888")
+            .style("font-family", "Georgia, serif")
+            .text("More notices (red)");
+    }
+
+    // Load data
     d3.csv("data/evictions_clean.csv").then(raw => {
         const filtered = raw.filter(d => d["Neighborhood - Analysis"] && d.primary_cause);
-        const nTotals  = d3.rollup(filtered, v=>v.length, d=>d["Neighborhood - Analysis"]);
-        const top20    = Array.from(nTotals.entries()).sort((a,b)=>b[1]-a[1]).slice(0,20).map(([n])=>n);
+        const nTotals  = d3.rollup(filtered, v => v.length, d => d["Neighborhood - Analysis"]);
+        const top20    = Array.from(nTotals.entries()).sort((a, b) => b[1] - a[1]).slice(0, 20).map(([n]) => n);
         const nested   = d3.rollup(
-            filtered.filter(d=>top20.includes(d["Neighborhood - Analysis"])),
-            v=>v.length, d=>d["Neighborhood - Analysis"], d=>d.primary_cause);
+            filtered.filter(d => top20.includes(d["Neighborhood - Analysis"])),
+            v => v.length,
+            d => d["Neighborhood - Analysis"],
+            d => d.primary_cause
+        );
 
         const cells = [];
         top20.forEach(nhood => {
-            const cm = nested.get(nhood)||new Map();
-            TOP_CAUSES.forEach(cause => cells.push({ nhood, cause, count: cm.get(cause)||0 }));
+            const cm = nested.get(nhood) || new Map();
+            TOP_CAUSES.forEach(cause => cells.push({ nhood, cause, count: cm.get(cause) || 0 }));
         });
 
         const causeMax = new Map();
         TOP_CAUSES.forEach(cause =>
-            causeMax.set(cause, d3.max(cells.filter(c=>c.cause===cause), c=>c.count)||1));
+            causeMax.set(cause, d3.max(cells.filter(c => c.cause === cause), c => c.count) || 1));
 
-        const norm = (cause, count) => count / causeMax.get(cause);
-        const cellColor = (cause, count) => d3.interpolateRgbBasis(COLOR_RANGE)(norm(cause, count));
-
-        const x = d3.scaleBand().domain(TOP_CAUSES).range([0,W]).padding(0.06);
-        const y = d3.scaleBand().domain(top20).range([0,H]).padding(0.06);
-
-        svg.selectAll(".cell").data(cells).enter().append("rect")
-            .attr("class", d => (norm(d.cause,d.count)>=STANDOUT && narratives[`${d.nhood}|${d.cause}`])
-                ? "cell cell-standout" : "cell")
-            .attr("x", d=>x(d.cause)).attr("y", d=>y(d.nhood))
-            .attr("width", x.bandwidth()).attr("height", y.bandwidth())
-            .attr("rx", 2).attr("fill", d=>cellColor(d.cause,d.count))
-            .on("mousemove", (event,d) => {
-                const text = narratives[`${d.nhood}|${d.cause}`];
-                if (!text) return;
-                showTip(event,`<div class="tooltip-header">${d.nhood} — ${d.cause}</div><div class="tooltip-insight">${text}</div>`);
-            })
-            .on("mouseleave", hideTip);
-
-        svg.append("g").attr("class","axis").call(d3.axisTop(x).tickSize(0))
-            .selectAll("text")
-                .style("font-size","0.70rem").style("font-family","Georgia, serif").style("fill","#444")
-                .attr("text-anchor","start").attr("dx","0.3em").attr("dy","-0.4em")
-                .attr("transform","rotate(-40)");
-
-        svg.append("g").attr("class","axis").call(d3.axisLeft(y).tickSize(0))
-            .selectAll("text").style("font-size","0.72rem").style("font-family","Georgia, serif")
-            .style("fill","#444").attr("dx","-0.4em");
-
-        // Legend centered, fixed width (not full grid)
-        const legendW = 250, legendH = 11, legendX = (W - 250) / 2, legendY = H + 26;
-        const lgDefs = svg.append("defs");
-        const grad   = lgDefs.append("linearGradient").attr("id","hm-grad");
-        COLOR_RANGE.forEach((c,i) =>
-            grad.append("stop").attr("offset",`${i/(COLOR_RANGE.length-1)*100}%`).attr("stop-color",c));
-        svg.append("rect").attr("x",legendX).attr("y",legendY)
-            .attr("width",legendW).attr("height",legendH).attr("rx",2)
-            .style("fill","url(#hm-grad)").style("outline","1px solid #bbb");
-        svg.append("text").attr("x",legendX).attr("y",legendY+legendH+14)
-            .attr("text-anchor","start").style("font-size","0.68rem").style("fill","#888")
-            .style("font-family","Georgia, serif").text("Fewer notices (green)");
-        svg.append("text").attr("x",legendX+legendW).attr("y",legendY+legendH+14)
-            .attr("text-anchor","end").style("font-size","0.68rem").style("fill","#888")
-            .style("font-family","Georgia, serif").text("More notices (red)");
+        buildChart(cells, top20, causeMax);
     });
+
 })();

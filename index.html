@@ -10,6 +10,7 @@
 <body>
 
 <!-- HERO -->
+<!-- Feedback #4: Removed 01-04 objective cards to improve data-to-ink ratio -->
 <section class="hero">
     <p class="hero-eyebrow fade-in">CS360 Data Visualization · Final Project</p>
     <h1 class="fade-in"><em>Get Out!</em> A Data-Driven Narrative of<br>Housing Displacement in San Francisco</h1>
@@ -28,6 +29,7 @@
     <div class="chart-wrapper">
         <h2 class="fade-in">Eviction Notices by SF Neighborhood (1997–2025)</h2>
         <p class="subtitle fade-in">Choropleth map of geographic concentration of eviction notices across San Francisco's 41 neighborhoods</p>
+        <!-- Narrative trimmed to 3 sentences max per feedback -->
         <p class="narrative fade-in">
             Housing displacement in San Francisco is deeply uneven, with historically high-density rental areas bearing a disproportionate share of eviction filings over the past three decades. The Mission District alone accounts for over 11% of all citywide notices filed since 1997. Use the year slider to trace how the geography of displacement has shifted in response to economic cycles, gentrification, and policy changes.
         </p>
@@ -39,15 +41,15 @@
                     <div class="legend-bar-container">
                         <svg id="legend-svg" width="140" height="16" style="border-radius:2px; outline: 1px solid #bbb;"></svg>
                         <div class="legend-labels">
-                            <span id="legend-min">0 (green)</span>
-                            <span id="legend-max"></span>
+                            <span id="legend-min">Low</span>
+                            <span id="legend-max">High</span>
                         </div>
                     </div>
                 </div>
                 <div class="slider-section">
                     <div class="slider-label">Year</div>
                     <div class="year-display" id="year-display">1997</div>
-                    <input type="range" id="year-slider" min="0" max="28" step="1" value="0" />
+                    <input type="range" id="year-slider" min="1" max="29" step="1" value="1" />
                     <div class="slider-endpoints">
                         <span>1997</span><span>2025</span>
                     </div>
@@ -69,9 +71,14 @@
     <div class="chart-wrapper">
         <h2 class="fade-in">Eviction Causes by SF Neighborhood (1997–2025)</h2>
         <p class="subtitle fade-in">Heatmap of eviction cause concentrations across San Francisco's 20 highest-volume neighborhoods, sorted by total filings</p>
+        <!-- Narrative trimmed to 3 sentences max per feedback -->
         <p class="narrative fade-in">
-            The causes driving eviction are not distributed evenly — each neighborhood carries a distinct displacement fingerprint shaped by its housing stock and demographics. Owner Move-In and Breach filings dominate high-density corridors like the Mission, while Nuisance evictions concentrate in areas with larger multi-unit buildings. These 20 neighborhoods account for over 80% of all citywide notices filed since 1997. <i>Red and dark orange cells can be hovered over for more context.</i> 
+            The causes driving eviction are not distributed evenly — each neighborhood carries a distinct displacement fingerprint shaped by its housing stock and demographics. Owner Move-In and Breach filings dominate high-density corridors like the Mission, while Nuisance evictions concentrate in areas with larger multi-unit buildings. These 20 neighborhoods account for over 80% of all citywide notices filed since 1997.
         </p>
+        <!-- Feedback #3: Note explaining which cells have tooltips -->
+        <p class="heatmap-note fade-in">★ Darker cells (top ~40% by volume per cause) are interactive, hover to reveal neighborhood context.</p>
+        <!-- Scroll hint shown on smaller screens only -->
+        <p class="heatmap-scroll-hint fade-in">← Scroll left and right to explore the full heatmap →</p>
         <div id="chart-heatmap" class="fade-in"></div>
     </div>
 </section>
@@ -83,9 +90,12 @@
     <div class="chart-wrapper">
         <h2 class="fade-in">SF Eviction Notices Filed Per Year (1997–2025)</h2>
         <p class="subtitle fade-in">Line chart of annual eviction filings reflecting the economic pressures shaping San Francisco's housing crisis</p>
+        <!-- Narrative trimmed to 3 sentences max per feedback -->
         <p class="narrative fade-in">
             Over nearly three decades, San Francisco's eviction filings have tracked closely with economic booms and crises — surging in the dot-com era, collapsing after 2001, and spiking again during the mid-2010s tech boom. The COVID-19 moratorium caused the sharpest single-year drop on record in 2020. Hover any data point or annotation to explore the historical context behind each shift.
         </p>
+        <!-- Scroll hint shown on smaller screens only -->
+        <p class="linechart-scroll-hint fade-in">← Scroll left and right to explore the full chart →</p>
         <div id="chart-linechart" class="fade-in"></div>
     </div>
 </section>
@@ -97,16 +107,19 @@
     <div class="chart-wrapper">
         <h2 class="fade-in">Eviction Notices by Cause Across Each Month (All Years Combined)</h2>
         <p class="subtitle fade-in">Stacked bar chart of eviction types by month, revealing seasonal patterns in San Francisco displacement</p>
+        <!-- Narrative trimmed to 3 sentences max per feedback -->
         <p class="narrative fade-in">
             Eviction filings in San Francisco follow distinct seasonal rhythms tied to the rental market cycle. Owner Move-In notices peak in spring as landlords align displacement with summer lease turnover, while Breach and Nuisance filings climb in late summer and fall. Hover any bar to read a focused seasonal insight for that month.
         </p>
+        <!-- Scroll hint shown on smaller screens only -->
+        <p class="barchart-scroll-hint fade-in">← Scroll left and right to explore the full chart →</p>
         <div id="chart-barchart" class="fade-in"></div>
     </div>
 </section>
 
 <div class="section-divider"></div>
 
-<!-- TECHNOLOGIES & SKILLS SECTION -->
+<!-- TECHNOLOGIES & SKILLS SECTION — mirrors hero style, cards like removed objectives -->
 <section class="tech-section">
     <p class="tech-eyebrow fade-in">Tools & Methods</p>
     <h2 class="fade-in">Technologies & Skills Used</h2>

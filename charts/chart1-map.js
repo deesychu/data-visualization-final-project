@@ -1,5 +1,4 @@
 // CHART 1 — CHOROPLETH MAP
-// Responsive: reads container width on load and on window resize
 (function () {
     const colorRange = [
         "rgb(215,25,28)",
@@ -12,10 +11,7 @@
     let selectedYear = 1997, yearlyMap = new Map(), geoFeatures = null;
     let svgEl = null, mapG = null, projection = null, pathGen = null, zoom = null;
 
-    // ── Dimensions ─────────────────────────────────────────────────────────
-    // On mobile the map stacks above the controls panel, so we can use full
-    // container width. On wider screens we cap at 600px to leave room for the
-    // controls panel beside it.
+    // ── Dimensions 
     function getDims() {
         const container = document.getElementById("map-svg-container");
         const W = Math.min(container.clientWidth || 600, 600);
@@ -24,7 +20,7 @@
         return { W, H };
     }
 
-    // ── Build or rebuild the SVG ────────────────────────────────────────────
+    // ── Build or rebuild the SVG
     function buildSvg() {
         const container = document.getElementById("map-svg-container");
         const { W, H } = getDims();
@@ -43,7 +39,7 @@
         projection = d3.geoMercator();
         pathGen    = d3.geoPath().projection(projection);
 
-        zoom = d3.zoom().scaleExtent([0.5, 14]).on("zoom", event => {
+        zoom = d3.zoom().scaleExtent([1, 14]).on("zoom", event => {
             mapG.attr("transform", event.transform);
             mapG.selectAll(".neighborhood").attr("stroke-width", 0.8 / event.transform.k);
         });
@@ -52,7 +48,6 @@
 
         svgEl = svg;
 
-        // Re-fit projection to new dimensions if data is loaded
         if (geoFeatures) {
             const EXCLUDE = new Set(["Treasure Island"]);
             const fitGeo = {
@@ -64,7 +59,7 @@
         }
     }
 
-    // ── Color scale ─────────────────────────────────────────────────────────
+    // ── Color scale 
     function makeColorScale(counts) {
         const maxVal = d3.max(Array.from(counts.values()).filter(v => v > 0)) || 1;
         return d3.scaleSequential()
@@ -72,7 +67,7 @@
             .interpolator(d3.interpolateRgbBasis([...colorRange].reverse()));
     }
 
-    // ── Legend ──────────────────────────────────────────────────────────────
+    // ── Legend 
     function drawLegend(counts) {
         const ls = d3.select("#legend-svg");
         ls.selectAll("*").remove();
@@ -89,7 +84,7 @@
         d3.select("#legend-max").text(maxVal.toLocaleString());
     }
 
-    // ── Top 5 ───────────────────────────────────────────────────────────────
+    // ── Top 5 
     function drawTop5(counts) {
         const top5 = Array.from(counts.entries()).filter(([k]) => k)
             .sort((a, b) => b[1] - a[1]).slice(0, 5);
@@ -109,7 +104,7 @@
         });
     }
 
-    // ── Render neighborhoods ─────────────────────────────────────────────────
+    // ── Render neighborhoods 
     function updateMap() {
         if (!geoFeatures || !mapG) return;
         const counts = yearlyMap.get(selectedYear) || new Map();
@@ -139,7 +134,7 @@
             .attr("fill", d => scale(counts.get(d.properties.nhood) || 0));
     }
 
-    // ── Load data ────────────────────────────────────────────────────────────
+    // ── Load data 
     Promise.all([
         d3.csv("data/evictions_clean.csv"),
         d3.json("data/Analysis_Neighborhoods.geojson")
@@ -152,14 +147,14 @@
         buildSvg();
     });
 
-    // ── Slider ───────────────────────────────────────────────────────────────
+    // ── Slider 
     document.getElementById("year-slider").addEventListener("input", function () {
         selectedYear = 1997 + (+this.value);
         document.getElementById("year-display").textContent = selectedYear;
         updateMap();
     });
 
-    // ── Responsive resize ────────────────────────────────────────────────────
+    // ── Responsive resize 
     let resizeTimer;
     window.addEventListener("resize", () => {
         clearTimeout(resizeTimer);
